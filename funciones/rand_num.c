@@ -6,15 +6,17 @@
 
 int main(int argc, const char *argv[])
 {
-    int i;
+    int i, n;
     // GSL's Taus generator:
     gsl_rng *rng = gsl_rng_alloc(gsl_rng_taus2);
     // Initialize the GSL generator with time:
     gsl_rng_set(rng, time(NULL)); // Seed with time
 
+    printf("How many random numbers:\n   ");
+    scanf("%i", &n);
     // Get uniform numbers
     printf("Uniform random numbers:\n   ");
-    for (i = 0; i < 10; ++i)
+    for (i = 0; i < n; ++i)
     {
         printf("%.4f ", gsl_rng_uniform(rng));
     }
