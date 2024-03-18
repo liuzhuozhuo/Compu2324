@@ -8,7 +8,7 @@ int main(int argc, const char *argv[])
 {
     int i;
     // GSL's Taus generator:
-    gsl_rng *rng = gsl_rng_alloc(gsl_rng_taus2);
+    gsl_rng *rng = gsl_rng_alloc(gsl_rng_taus);
     // Initialize the GSL generator with time:
     gsl_rng_set(rng, time(NULL)); // Seed with time
 
