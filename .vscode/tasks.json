@@ -9,7 +9,12 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe"
+                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "-I/opt/homebrew/include",
+                "-L/opt/homebrew/lib",
+                "-lgsl",
+                "-lgslcblas",
+                "-lm"
             ],
             "options": {
                 "cwd": "${fileDirname}"
