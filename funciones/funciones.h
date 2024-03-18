@@ -23,3 +23,11 @@ double random_number(){
     n = (double)rand() / RAND_MAX;
     return n;
 }
+
+//return a integer random number, from 0 to range-1, using the seed indicated
+int random_int_number(int range, int seed){ 
+    int n;
+    srand(seed);
+    n = rand() % range;
+    return n;
+}
