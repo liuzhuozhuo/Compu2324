@@ -3,7 +3,7 @@
 
 int main(){
         // Define t of the simulation, and the step h
-    double t = 10.;
+    double t = 1.;
     double h= 0.1;
 
     // Rescale the magnitudes and define some constants
@@ -46,14 +46,14 @@ int main(){
         printf("%lf, ", a[i][0]);
     }
 
-/*     for (i = 0; i < t; i+=h){
+    for (i = 0; i < (int)(t/h); i++){
         verlet_algorithm(r_p, v_p, a_p, m_p, N, h);
-
+        printf("Iteracion %i: \n", i);
         for (j = 0; j < N; j++){
-            //printf("%lf, %lf, %lf", r[j][0], r[j][1], r[j][2]);
+            printf("Planeta %i: %lf, %lf, %lf \n",j , r[j][0], r[j][1], r[j][2]);
         }
 
-    } */
+    }
     fclose(f_init);
     fclose(f_exp);
 

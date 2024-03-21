@@ -15,7 +15,7 @@ void acceleration (double* r, double* a, double* m, int N) {
 
     //Calculate the distance vector between planets. 
     for(i = 0; i < N-1; i++){
-        for (j = i; j < N-1; j++){
+        for (j = i+1; j < N; j++){
             R_mod[i][j]= 0;
             for (k = 0; k < 3; k++){
                 R[i][j][k] = *(r+i*N+k) - *(r+j*N+k); 
