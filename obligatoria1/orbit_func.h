@@ -7,7 +7,7 @@
 //a: matrix (pointer) with the acceleration of all the planets in 3d
 //m: vector (pointer) with the modified mass of the planets
 //N is the total number of planets
-void acceleration (double* r, double* a, double* m, int N) {
+void acceleration (long double* r, long double* a, double* m, int N) {
     int i, j, k;
     double acc; //Dummy variable to sum all the acceleration for a planet in one component
     double R[N][N][3]; 
@@ -44,7 +44,7 @@ void acceleration (double* r, double* a, double* m, int N) {
 }
 
 //Function that calculate the next set of position and velocity using the verlet algorithms
-void verlet_algorithm(double* r, double* v ,double* a, double* m, int N, double h){
+void verlet_algorithm(long double* r, long double* v ,long double* a, double* m, int N, double h){
     int i, j, k;
     double w[N][3];
 
@@ -64,4 +64,12 @@ void verlet_algorithm(double* r, double* v ,double* a, double* m, int N, double 
             *(v+i*N+k) = w[N][k] + (h/2.)*(*(a+i*N+k));
         }
     }
+}
+
+//Function that calculate the total energy of the system to check if the energy is conserved.
+void energy (double* r, double*v, double* m, int N){
+    int i, j, k;
+    double v_mod[N];
+    
+    
 }
