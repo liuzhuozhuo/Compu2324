@@ -31,6 +31,8 @@ void acceleration (long double* r, long double* a, double* m, int N) {
             //iterate between planets
             acc = 0;
             for (j = 0; j < N; j++){
+                // Considering that only the upper diagonal of the matriz is calculated, and to avoid the case i=i, 
+                // the following conditions are checked.
                 if(j>i){
                     acc += (*(m+j))*R[i][j][k]/pow(R_mod[i][j], 3./2.);
                 }
@@ -38,17 +40,19 @@ void acceleration (long double* r, long double* a, double* m, int N) {
                     acc += -(*(m+j))*R[j][i][k]/pow(R_mod[j][i], 3./2.);
                 }
             } 
+            //Assing the acceleration checked to it's position in the acceleration matrix.
             *(a+i*N+k) = acc;
         } 
     }    
 }
 
-//Function that calculate the next set of position and velocity using the verlet algorithms
+// Function that calculate the next set of position and velocity using the verlet algorithms
+// It returns the values by overwriting the previous vectors
 void verlet_algorithm(long double* r, long double* v ,long double* a, double* m, int N, double h){
     int i, j, k;
-    double w[N][3];
+    double w[N][3]; // Angular velocity used for the calculation of the new velocities
 
-    //Calculate the new positions
+    //Calculate the new positions, and the angular velocity.
     for (i = 0; i < N; i++){
         for (k = 0; k < 3; k++){
             *(r+i*N+k) += h*(*(v+i*N+k)) + (pow(h, 2)/2.) * (*(a+i*N+k));
