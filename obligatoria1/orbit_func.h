@@ -47,6 +47,9 @@ void acceleration (long double* r, long double* a, double* m, int N) {
 }
 
 // Function that calculate the next set of position and velocity using the verlet algorithms
+// Using the same notation as before, and the additional parameters are:
+// v: matrix (pointer) with the velocity of all the planets in 3d
+// h: the step in time for each iteration
 // It returns the values by overwriting the previous vectors
 void verlet_algorithm(long double* r, long double* v ,long double* a, double* m, int N, double h){
     int i, j, k;
