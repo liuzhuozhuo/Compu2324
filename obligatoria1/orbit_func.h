@@ -73,10 +73,45 @@ void verlet_algorithm(long double* r, long double* v ,long double* a, double* m,
     }
 }
 
+// Function that changes the coordinates so the selected object, l,  is in the origin of coordinates
+// Using the same notation as previous functions, 
+void change_coord (double* r, int l,int N){
+    //Coordinates of the object l
+    double r_l[3] = {*(r+l*N+0), *(r+l*N+1), *(r+l*N+2)};
+    int i, k;
+
+    for(i = 0; i < N; i++){
+        for (k = 0; k < N; k++){
+            *(r+i*N+k) -= r_l[k];
+        }
+    }
+}
+
 //Function that calculate the total energy of the system to check if the energy is conserved.
-void energy (double* r, double*v, double* m, int N){
-    int i, j, k;
-    double v_mod[N];
+// double energy (double* r, double*v, double* m, int N){
+//     int i, j, k;
+//     double T = 0, V= 0;
+//     double v_mod_sq[N];
+
+
+
+//     for (i = 0; i < N; i++){
+//         for (k = 0; k < 3; k++){
+
+//         }
+//         T += (1./2.)*(*(m+i))*v_mod_sq[i];
+//     }
     
+    
+// }
+
+// Function that calculate the angle, from the position of a planet.
+// In this case r_i indicate a vector of size 3, NOT A MATRIX
+double angle(double* r_i){
+    return atan(*(r_i+1)/(*(r_i)));
+}
+
+//Function that returns the number of turns that the planet has done.
+double turn_count(){
     
 }
