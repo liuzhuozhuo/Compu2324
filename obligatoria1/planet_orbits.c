@@ -32,14 +32,16 @@ int main(){
 
     FILE *f_init, *f_exp; //pointer to the files
 
-    f_init = fopen("initial_cond.txt", "r"); // open the init_cond file to read
+    f_init = fopen("initial_condition.csv", "r"); // open the init_cond file to read
     f_exp = fopen("planets_data.txt", "w"); // open the export file to write
 
     //Read the file and store the data in r and v
     i = 0;
-    while (fscanf(f_init, "%lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf",&m[i] , &r[i][0], &r[i][1], &r[i][2], &v[i][0], &v[i][1], &v[i][2])!= EOF){
+/*     while (fscanf(f_init, "%lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf",&m[i] , &r[i][0], &r[i][1], &r[i][2], &v[i][0], &v[i][1], &v[i][2])!= EOF){
         i++;
-    }
+    } */
+    fscanf(f_init, "");
+
     
     // From those data rescale them
     for (i=0; i<N; i++){
