@@ -20,8 +20,10 @@ void acceleration (double* r, double* a, double* m, int N) {
             R_mod[i][j]= 0;
             for (k = 0; k < 3; k++){
                 R[i][j][k] = *(r+i*3+k) - *(r+j*3+k); 
+                R[j][i][k] = -R[i][j][k];
                 R_mod[i][j] += pow(R[i][j][k], 2);
             }
+            R_mod[j][i] = R_mod[i][j];
         }
     }
     //Calculate the acceleration
@@ -30,19 +32,13 @@ void acceleration (double* r, double* a, double* m, int N) {
         //iterate in the components
         for (k = 0; k < 3; k++){
             //iterate between planets
-            acc = 0;
+            *(a+i*3+k) = 0;
             for (j = 0; j < N; j++){
-                // Considering that only the upper diagonal of the matriz is calculated, and to avoid the case i=i, 
-                // the following conditions are checked.
-                if(j>i){
-                    acc += -(*(m+j*3))*R[i][j][k]/pow(R_mod[i][j], 3./2.);
-                }
-                if(j<i){
-                    acc += (*(m+j*3))*R[j][i][k]/pow(R_mod[j][i], 3./2.);
+                if(i!=j){
+                    *(a+i*3+k) += -(*(m+j))*R[i][j][k]/pow(R_mod[i][j], 3./2.);
                 }
             } 
-            //Assing the acceleration checked to it's position in the acceleration matrix.
-            *(a+i*3+k) = acc;
+            
         } 
     }    
 }

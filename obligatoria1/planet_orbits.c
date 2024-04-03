@@ -3,23 +3,23 @@
 
 int main(){
         // Define t of the simulation, and the step h
-    double t = 10.;
-    double h= 0.01;
+    double t = 3.154e7; //s
+    double h= 8.64e4; //s
 
     // Rescale the magnitudes and define some constants
-    double G = 6.67408e-17; //N km2/kg2, Gravitational constant
-    double c = 1.4966e8; //km, astronomical units
+    double G = 6.67408e-11; //N km2/kg2, Gravitational constant
+    double c = 1.4966e11; //km, astronomical units
     double M_s = 1.99e30; //kg, solar mass
     double t_prime = pow(G*M_s/pow(c, 3.),0.5) ;//
-    int N = 5; //Number of planets
+    int N = 6; //Number of planets
 
     int i, j, k; // Used for the loop
 
     // Define the matrix for position, velociy and acceleration, and it's pointers
-    double r[5][3];
-    double v[5][3];
-    double a[5][3];
-    double m[5];
+    double r[N][3];
+    double v[N][3];
+    double a[N][3];
+    double m[N];
 
     double* r_p = r[0];
     double* v_p = v[0];
@@ -31,7 +31,7 @@ int main(){
 
     FILE *f_init, *f_exp; //pointer to the files
 
-    f_init = fopen("init_cond.txt", "r"); // open the init_cond file to read
+    f_init = fopen("initial_cond.txt", "r"); // open the init_cond file to read
     f_exp = fopen("planets_data.txt", "w"); // open the export file to write
 
     //Read the file and store the data in r and v
@@ -41,14 +41,15 @@ int main(){
     }
     
     // From those data rescale them
+    h = t_prime*h;
+    t = t*t_prime;
     for (i=0; i<N; i++){
         m[i] = m[i]/M_s;
-        h = t_prime*h;
-        t = t*t_prime;
+        
         printf("%lf,", m[i]);
         for (k=0; k<3; k++){
             r[i][k] = r[i][k]/c;
-            v[i][k] = v[i][k]/(t_prime*c);
+            v[i][k] = v[i][k]/(c*t_prime);
             printf("%lf, ", r[i][k]);
             printf("%lf, ", v[i][k]);
         }
