@@ -7,7 +7,7 @@
 //a: matrix (pointer) with the acceleration of all the planets in 3d
 //m: vector (pointer) with the modified mass of the planets
 //N is the total number of planets
-void acceleration (long double* r, long double* a, double* m, int N) {
+void acceleration (double* r, double* a, double* m, int N) {
     int i, j, k;
     double acc; //Dummy variable to sum all the acceleration for a planet in one component
     double R[N][N][3]; 
@@ -19,7 +19,7 @@ void acceleration (long double* r, long double* a, double* m, int N) {
             //Initialize the value to 0, to add recursively the rest of the components
             R_mod[i][j]= 0;
             for (k = 0; k < 3; k++){
-                R[i][j][k] = *(r+i*N+k) - *(r+j*N+k); 
+                R[i][j][k] = *(r+i*3+k) - *(r+j*3+k); 
                 R_mod[i][j] += pow(R[i][j][k], 2);
             }
         }
@@ -35,14 +35,14 @@ void acceleration (long double* r, long double* a, double* m, int N) {
                 // Considering that only the upper diagonal of the matriz is calculated, and to avoid the case i=i, 
                 // the following conditions are checked.
                 if(j>i){
-                    acc += (*(m+j))*R[i][j][k]/pow(R_mod[i][j], 3./2.);
+                    acc += -(*(m+j*3))*R[i][j][k]/pow(R_mod[i][j], 3./2.);
                 }
                 if(j<i){
-                    acc += -(*(m+j))*R[j][i][k]/pow(R_mod[j][i], 3./2.);
+                    acc += (*(m+j*3))*R[j][i][k]/pow(R_mod[j][i], 3./2.);
                 }
             } 
             //Assing the acceleration checked to it's position in the acceleration matrix.
-            *(a+i*N+k) = acc;
+            *(a+i*3+k) = acc;
         } 
     }    
 }
@@ -52,15 +52,15 @@ void acceleration (long double* r, long double* a, double* m, int N) {
 // v: matrix (pointer) with the velocity of all the planets in 3d
 // h: the step in time for each iteration
 // It returns the values by overwriting the previous vectors
-void verlet_algorithm(long double* r, long double* v ,long double* a, double* m, int N, double h){
+void verlet_algorithm(double* r, double* v ,double* a, double* m, int N, double h){
     int i, j, k;
     double w[N][3]; // Angular velocity used for the calculation of the new velocities
 
     //Calculate the new positions, and the angular velocity.
     for (i = 0; i < N; i++){
         for (k = 0; k < 3; k++){
-            *(r+i*N+k) += h*(*(v+i*N+k)) + (pow(h, 2)/2.) * (*(a+i*N+k));
-            w[N][k] = *(v+i*N+k) + (h/2.)*(*(a+i*N+k));
+            *(r+i*3+k) = *(r+i*3+k) + (h*(*(v+i*3+k))) + (h * h * (*(a+i*3+k))/2);
+            w[i][k] = (*(v+i*3+k)) + (h * (*(a+i*3+k))/2);
         }
     }
    //Using the acceleration function calculate the net acceleration for each of the planets
@@ -69,7 +69,7 @@ void verlet_algorithm(long double* r, long double* v ,long double* a, double* m,
     //Calculate the new velocity of the planets
     for (i = 0; i < N; i++){
         for (k = 0; k < 3; k++){
-            *(v+i*N+k) = w[N][k] + (h/2.)*(*(a+i*N+k));
+            *(v+i*3+k) = w[i][k] + (h * (*(a+i*3+k))/2);
         }
     }
 }
@@ -114,5 +114,5 @@ double angle(double* r_i){
 
 //Function that returns the number of turns that the planet has done.
 double turn_count(){
-    
+    return 0;
 }
