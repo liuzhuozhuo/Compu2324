@@ -16,6 +16,7 @@ void acceleration (long double* r, long double* a, double* m, int N) {
     //Calculate the distance vector between planets. 
     for(i = 0; i < N-1; i++){
         for (j = i+1; j < N; j++){
+            //Initialize the value to 0, to add recursively the rest of the components
             R_mod[i][j]= 0;
             for (k = 0; k < 3; k++){
                 R[i][j][k] = *(r+i*N+k) - *(r+j*N+k); 
