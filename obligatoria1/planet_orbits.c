@@ -11,7 +11,7 @@ int main(){
     double c = 1.4966e11; //km, astronomical units
     double M_s = 1.99e30; //kg, solar mass
     double t_prime = pow(G*M_s/pow(c, 3.),0.5) ;//
-    int N = 6; //Number of planets
+    int N = 10; //Number of planets
 
     int i, j, k; // Used for the loop
 
@@ -31,8 +31,8 @@ int main(){
 
     FILE *f_init, *f_exp; //pointer to the files
 
-    f_init = fopen("initial_cond.txt", "r"); // open the init_cond file to read
-    f_exp = fopen("planets_data.txt", "w"); // open the export file to write
+    f_init = fopen("data/init_cond.txt", "r"); // open the init_cond file to read
+    f_exp = fopen("data/planets_data.txt", "w"); // open the export file to write
 
     //Read the file and store the data in r and v
     i = 0;
