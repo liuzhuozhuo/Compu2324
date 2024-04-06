@@ -47,25 +47,38 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "obligatoria1/data/geocentric_data.txt" # Nombre del fichero de datos
-file_out = "obligatoria1/planetas_geo" # Nombre del fichero de salida (sin extensión)
+type_of_graph = 'planets'
+size_of_graph = 'interior'
+file_in = f"obligatoria1/data/{type_of_graph}_data_{size_of_graph}.txt" # Nombre del fichero de datos
+file_out = f"obligatoria1/{type_of_graph}_{size_of_graph}" # Nombre del fichero de salida (sin extensión)
 
+
+# Dependiendo del tipo de animación se usa unos parametros o otros:
 # Límites de los ejes X e Y
-size = 50
-
-interval = 10 # Tiempo entre fotogramas en milisegundos
-show_trail = True # Muestra la "estela" del planeta
-trail_width = 1 # Ancho de la estela
-save_to_file = True # False: muestra la animación por pantalla,
-                     # True: la guarda en un fichero
-dpi = 150 # Calidad del vídeo de salida (dots per inch)
-
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
 # el radio de cada uno
-planet_radius = 0.1
-#planet_radius = [0.5, 0.7, 1.1]
+if (size_of_graph == 'interior'):
+    planet_radius = [0.3, 0.05, 0.1, 0.1, 0.07, 0, 0, 0, 0, 0]  # Tamaños usado para la simulación,
+                                                                        # relación entre ellas no reales
+    size = 3
+    interval = 50 # Tiempo entre fotogramas en milisegundos
+else: 
+    planet_radius = [0.5, 0.3, 0.3, 0.3, 0.3, 0.7, 0.6, 0.5, 0.5, 0.3]  # Tamaños usado para la simulación,
+                                                                        # relación entre ellas no reales
+    size = 50
+    interval = 1 # Tiempo entre fotogramas en milisegundos
 
+
+show_trail = True # Muestra la "estela" del planeta
+trail_width = 1 # Ancho de la estela
+save_to_file = False # False: muestra la animación por pantalla,
+                     # True: la guarda en un fichero
+dpi = 150 # Calidad del vídeo de salida (dots per inch)
+
+# Los diferentes colores usado para los planetas
+planet_colors = ['#FDB813', 'gray', 'darkgoldenrod', 'steelblue', '#993D00', 
+                 '#B07F35', '#B08F36', '#5580AA', '#366896', 'tan']
 
 # Lectura del fichero de datos
 # ========================================
@@ -112,6 +125,8 @@ ax.axis("equal")  # Misma escala para ejes X e Y
 ax.set_xlim(-size, size)
 ax.set_ylim(-size, size)
 
+ax.grid()
+
 # Si solo se ha dado un radio para todos los planetas, conviértelo a una
 # lista con todos los elementos iguales
 if not hasattr(planet_radius, "__iter__"):
@@ -129,10 +144,10 @@ else:
 # al punto en una lista
 planet_points = list()
 planet_trails = list()
-for planet_pos, radius in zip(frames_data[0], planet_radius):
+for planet_pos, radius, planet_color in zip(frames_data[0], planet_radius, planet_colors):
     x, y = planet_pos
     #planet_point, = ax.plot(x, y, "o", markersize=10)
-    planet_point = Circle((x, y), radius)
+    planet_point = Circle((x, y), radius, facecolor = planet_color)
     ax.add_artist(planet_point)
     planet_points.append(planet_point)
 
