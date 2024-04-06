@@ -47,14 +47,11 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "obligatoria1/planets_data_joel.txt" # Nombre del fichero de datos
-file_out = "obligatoria1/planetas" # Nombre del fichero de salida (sin extensión)
+file_in = "obligatoria1/data/geocentric_data.txt" # Nombre del fichero de datos
+file_out = "obligatoria1/planetas_geo" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
-x_min = -50
-x_max = 50
-y_min = -50
-y_max = 50
+size = 50
 
 interval = 10 # Tiempo entre fotogramas en milisegundos
 show_trail = True # Muestra la "estela" del planeta
@@ -66,7 +63,7 @@ dpi = 150 # Calidad del vídeo de salida (dots per inch)
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
 # el radio de cada uno
-planet_radius = 0.5
+planet_radius = 0.1
 #planet_radius = [0.5, 0.7, 1.1]
 
 
@@ -107,12 +104,13 @@ nplanets = len(frames_data[0])
 # Creación de la animación/gráfico
 # ========================================
 # Crea los objetos figure y axis
-fig, ax = plt.subplots()
+fig = plt.figure(figsize=(10, 10))    
+ax = fig.add_subplot(111) 
 
 # Define el rango de los ejes
 ax.axis("equal")  # Misma escala para ejes X e Y
-ax.set_xlim(x_min, x_max)
-ax.set_ylim(y_min, y_max)
+ax.set_xlim(-size, size)
+ax.set_ylim(-size, size)
 
 # Si solo se ha dado un radio para todos los planetas, conviértelo a una
 # lista con todos los elementos iguales
