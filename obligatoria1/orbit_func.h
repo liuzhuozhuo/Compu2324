@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 
 //Update the acceleration vector, 
 //r: matrix (pointer) with the position of all the planets in 3d
@@ -8,23 +9,22 @@
 //m: vector (pointer) with the modified mass of the planets
 //N is the total number of planets
 //D: the dimentions of the simulation
-void acceleration (double* r, double* a, double* m, int N, int D) {
+void acceleration (double* r, double* a, double* m, double* R_mod, int N, int D) {
     int i, j, k;
     double acc; //Dummy variable to sum all the acceleration for a planet in one component
     double R[N][N][D]; 
-    double R_mod[N][N]; //Matrix NxN with the module of the distance between planets
 
     //Calculate the distance vector between planets. 
     for(i = 0; i < N-1; i++){
         for (j = i+1; j < N; j++){
             //Initialize the value to 0, to add recursively the rest of the components
-            R_mod[i][j]= 0;
+            *(R_mod+i*N+j)= 0;
             for (k = 0; k < D; k++){
                 R[i][j][k] = *(r+i*D+k) - *(r+j*D+k); 
                 R[j][i][k] = -R[i][j][k];
-                R_mod[i][j] += pow(R[i][j][k], 2);
+               *(R_mod+i*N+j) += pow(R[i][j][k], 2);
             }
-            R_mod[j][i] = R_mod[i][j];
+            *(R_mod+j*N+i)= *(R_mod+i*N +j);
         }
     }
     //Calculate the acceleration
@@ -36,7 +36,7 @@ void acceleration (double* r, double* a, double* m, int N, int D) {
             *(a+i*D+k) = 0;
             for (j = 0; j < N; j++){
                 if(i!=j){
-                    *(a+i*D+k) += -(*(m+j))*R[i][j][k]/pow(R_mod[i][j], 3./2.);
+                    *(a+i*D+k) += -(*(m+j))*R[i][j][k]/pow(*(R_mod+i*N+j), 3./2.);
                 }
             } 
             
@@ -49,7 +49,7 @@ void acceleration (double* r, double* a, double* m, int N, int D) {
 // v: matrix (pointer) with the velocity of all the planets in 3d
 // h: the step in time for each iteration
 // It returns the values by overwriting the previous vectors
-void verlet_algorithm(double* r, double* v ,double* a, double* m, int N, int D, double h){
+void verlet_algorithm(double* r, double* v ,double* a, double* m, double* R_mod, int N, int D, double h){
     int i, j, k;
     double w[N][D]; // Angular velocity used for the calculation of the new velocities
 
@@ -61,12 +61,38 @@ void verlet_algorithm(double* r, double* v ,double* a, double* m, int N, int D, 
         }
     }
    //Using the acceleration function calculate the net acceleration for each of the planets
-    acceleration(r, a, m, N, D);
+    acceleration(r, a, m, R_mod, N, D);
 
     //Calculate the new velocity of the planets
     for (i = 0; i < N; i++){
         for (k = 0; k < D; k++){
             *(v+i*D+k) = w[i][k] + (h * (*(a+i*D+k))/2);
+        }
+    }
+}
+
+void rescale (double* r, double* v ,double* a, double* m, 
+                    int N, int D, double t_prime, double M_s, double c){
+
+    int i, k;
+    for (i=0; i<N; i++){
+        m[i] = m[i]/M_s;
+        for (k=0; k<D; k++){
+            *(r+i*D+k) = *(r+i*D+k)/c;
+            *(v+i*D+k) = *(v+i*D+k)/(c*t_prime);
+        }
+    }
+}
+
+void derescale(double* r, double* v ,double* a, double* m, double t, 
+                    int N, int D, double h, double t_prime, double M_s, double c){
+
+    int i, k;
+    for (i=0; i<N; i++){
+        m[i] = m[i]*M_s;
+        for (k=0; k<D; k++){
+            *(r+i*D+k) = *(r+i*D+k)*c;
+            *(v+i*D+k) = *(v+i*D+k)*(c*t_prime);
         }
     }
 }
@@ -96,31 +122,44 @@ void change_coord (double* r, double* r_exp, int l, int N, int D){
     
 }
 
-//Function that calculate the total energy of the system to check if the energy is conserved.
-// double energy (double* r, double*v, double* m, int N){
-//     int i, j, k;
-//     double T = 0, V= 0;
-//     double v_mod_sq[N];
+//Function that calculate the energy for each of the planets of the system to check if the energy is conserved.
+// T: vector with the kinetic energy of the planets
+void energy (double* r, double*v, double* m, double* R_mod, double* T, double* V,int N, int D){
+    int i, j, k;
 
+    for (i = 0; i < N; i++){
+        *(T+i) = 0;
+        *(V+i) = 0;
+        for (k = 0; k < D; k++){
+            *(T+i) += *(m+i)*(*(v+i*D+k))*(*(v+i*D+k))/2.;
+        }
+        for (j = 0; j < N; j++){
+            if(i != j) {
+                *(V+i) -= (*(m+i))*(*(m+j))/pow(*(R_mod+i*N+j), 0.5);
+            }
+        }
+        
+    }
+}
 
+// Function that calculate the angle, from the position of a planet, NOT THE SUN. (Only valid on 2D)
 
-//     for (i = 0; i < N; i++){
-//         for (k = 0; k < 3; k++){
-
-//         }
-//         T += (1./2.)*(*(m+i))*v_mod_sq[i];
-//     }
-    
-    
-// }
-
-// Function that calculate the angle, from the position of a planet.
-// In this case r_i indicate a vector of size 3, NOT A MATRIX
-double angle(double* r_i){
-    return atan(*(r_i+1)/(*(r_i)));
+void angle(double* r, double* curr_angle, int N){
+    int i;
+    for (i = 1; i < N; i++){
+        if (*(r+i*2) < 0){
+            *(curr_angle+i) = -atan(*(r+i*2+1)/(*(r+i*2)));
+        }else{
+            *(curr_angle+i) = atan(*(r+i*2+1)/(*(r+i*2)));
+        }
+    }   
 }
 
 //Function that returns the number of turns that the planet has done.
-double turn_count(){
-    return 0;
+bool turn_count(double prev_angle, double curr_angle, double init_angle){
+    if (curr_angle > init_angle && prev_angle < init_angle){
+        return true;
+    }else{
+        return false;
+    }
 }
