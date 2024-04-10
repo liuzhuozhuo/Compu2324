@@ -50,7 +50,7 @@ import numpy as np
 type_of_graph = 'planets'
 size_of_graph = 'interior'
 file_in = f"obligatoria1/data/{type_of_graph}_data_{size_of_graph}.txt" # Nombre del fichero de datos
-file_out = f"obligatoria1/{type_of_graph}_{size_of_graph}" # Nombre del fichero de salida (sin extensión)
+file_out = f"obligatoria1/video/{type_of_graph}_{size_of_graph}" # Nombre del fichero de salida (sin extensión)
 
 
 # Dependiendo del tipo de animación se usa unos parametros o otros:
@@ -62,7 +62,7 @@ if (size_of_graph == 'interior'):
     planet_radius = [0.3, 0.05, 0.1, 0.1, 0.07, 0, 0, 0, 0, 0]  # Tamaños usado para la simulación,
                                                                         # relación entre ellas no reales
     size = 3
-    interval = 50 # Tiempo entre fotogramas en milisegundos
+    interval = 25 # Tiempo entre fotogramas en milisegundos
 else: 
     planet_radius = [0.5, 0.3, 0.3, 0.3, 0.3, 0.7, 0.6, 0.5, 0.5, 0.3]  # Tamaños usado para la simulación,
                                                                         # relación entre ellas no reales
@@ -72,7 +72,7 @@ else:
 
 show_trail = True # Muestra la "estela" del planeta
 trail_width = 1 # Ancho de la estela
-save_to_file = False # False: muestra la animación por pantalla,
+save_to_file = True # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
 dpi = 150 # Calidad del vídeo de salida (dots per inch)
 
@@ -117,7 +117,7 @@ nplanets = len(frames_data[0])
 # Creación de la animación/gráfico
 # ========================================
 # Crea los objetos figure y axis
-fig = plt.figure(figsize=(10, 10))    
+fig = plt.figure(figsize=(7, 7))    
 ax = fig.add_subplot(111) 
 
 # Define el rango de los ejes
@@ -125,6 +125,7 @@ ax.axis("equal")  # Misma escala para ejes X e Y
 ax.set_xlim(-size, size)
 ax.set_ylim(-size, size)
 
+ax.set_title("Simulación del sistema solar (tiempo total: 2 años)")
 ax.grid()
 
 # Si solo se ha dado un radio para todos los planetas, conviértelo a una
