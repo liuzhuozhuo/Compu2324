@@ -3,22 +3,23 @@
 
 int main(){
     // Modified arguments for different simulations
-    double total_time =  2;// in years
-    double interval = 1; // in days
+    double total_time =  200;// in years
+    double interval = 3; // in days
 
     int N = 10; //Number of planets
     int D = 2; // Dimensions of the simulation
-    int q = 1; // Every q frames the data gets logged.
+    int q = 5; // Every q frames the data gets logged.
 
     // Open folder where the initial conditions are stored, and the folder to write the data.
     // The initial condition file has format, where each line --> mass   x   y   z   v_x   v_y   v_z, 
     // separated by tab of the different planets
 
-    FILE *f_init, *f_exp, *f_geo, *f_energy; //pointer to the files
+    FILE *f_init, *f_exp, *f_geo, *f_energy_t, *f_energy; //pointer to the files
 
     f_init = fopen("data/init_cond.txt", "r"); // open the init_cond file to read
-    f_exp = fopen("data/planets_data_interior.txt", "w"); // open the export file to write
-    f_geo = fopen("data/geocentric_data_interior.txt", "w"); // open the export file to write
+    f_exp = fopen("data/planets_data_.txt", "w"); // open the export file to write
+    f_geo = fopen("data/geocentric_data_.txt", "w"); // open the export file to write
+    f_energy_t = fopen("data/energy_total.txt", "w");
     f_energy = fopen("data/energy.txt", "w");
 
     // Define t of the simulation, and the step h
@@ -40,6 +41,7 @@ int main(){
     double a[N][D];
     double R_mod[N][N];
     double m[N];
+    double T_total, V_total;
     double T[N], V[N];
 
     double curr_angle[N], prev_angle[N], init_angle[N];
@@ -106,8 +108,6 @@ int main(){
             fprintf(f_geo, "\n");
         }
 
-        energy(r_p, v_p, m_p, R_mod_p, T_p, V_p, N, D);
-
         for (j = 1; j < N; j++){
             prev_angle[j] = curr_angle[j];
         }
@@ -120,18 +120,30 @@ int main(){
             }
         }
 
-        for (j = 0; j < N; j++){
-            fprintf(f_energy, "%lf, %lf, %lf\n", T[j], V[j], T[j]+V[j]);
+        T_total = k_energy(v_p, m_p, N, D);
+        V_total = p_energy(R_mod_p, m_p, N, D);
 
+        energy(v_p, m_p, R_mod_p, T_p ,V_p, N, D);
+        for (j = 0; j < N; j++){
+            T[j] = derescaled_energy(T[j], t_prime, M_s, c);
+            V[j] = derescaled_energy(V[j], t_prime, M_s, c);
+            fprintf(f_energy, "%lf, %lf, %lf, %lf\n", i*h, T[j], V[j], T[j]+V[j]);
         }
 
-        fprintf(f_energy, "\n");
+        if(i != (int)(t/h)-1){
+            fprintf(f_energy, "\n");
+        }
+        
+
+        fprintf(f_energy_t, "%lf, %lf, %lf, %lf\n", i*h, T_total, V_total, T_total+V_total);
+        
     }
 
     fclose(f_init);
     fclose(f_exp);
     fclose(f_geo);
     fclose(f_energy);
+    fclose(f_energy_t);
 
     return(0);
 }
