@@ -17,11 +17,11 @@ int main(){
     FILE *f_init, *f_exp, *f_geo, *f_energy_t, *f_energy, *f_period; //pointer to the files
 
     f_init = fopen("data/init_cond.txt", "r"); // open the init_cond file to read
-    f_exp = fopen("data/planets_data_.txt", "w"); // open the export file to write
-    f_geo = fopen("data/geocentric_data_.txt", "w"); // open the export file to write
-    f_energy_t = fopen("data/energy_total.txt", "w");
-    f_energy = fopen("data/energy.txt", "w");
-    f_period = fopen("data/period.txt", "w");
+    f_exp = fopen("data/planets_data_.txt", "w"); // open the export file to write the planet orbit
+    f_geo = fopen("data/geocentric_data_.txt", "w"); // open the export file to write the planet orbit for geocentric
+    f_energy_t = fopen("data/energy_total.txt", "w"); // open the export file to write the total energy of the system
+    f_energy = fopen("data/energy.txt", "w"); // open the export file to write the total energy of each planet
+    f_period = fopen("data/period.txt", "w"); // open the export file to write the period for each planet
 
     // Define t of the simulation, and the step h
     double t = total_time * 3.154e7; //s
@@ -76,6 +76,7 @@ int main(){
     //Calculate the current angle of the different planets:
     angle(r_p, c_angle_p, N);
 
+    // Asign the calculated angle to the array of initial angles
     for (i = 1; i < N; i++){
         n_turns[i] = 0;
         init_angle[i] = curr_angle[i];
@@ -84,6 +85,7 @@ int main(){
     //Calculate the first set of acceleration used for the Verlet algorithm
     acceleration(r_p, a_p, m_p, R_mod_p, N, D);
 
+    //Iterate in time 
     for (i = 0; i < (int)(t/h); i++){
         // Using the Verlet algorithms get the new position for the planets
         verlet_algorithm(r_p, v_p, a_p, m_p, R_mod_p, N, D, h);
@@ -91,6 +93,7 @@ int main(){
         // Using the function for the change of coordinates, get the position of the planets in terms of the Earth
         change_coord(r_p, r_pg, 3, N, D);
         
+        // Depending on the dimention used, the data is written accordingly
         if (D == 2 && i%q == 0){
             for (j = 0; j < N; j++){
                 // Print the positions in the file
@@ -99,6 +102,7 @@ int main(){
             }
             fprintf(f_exp, "\n");
             fprintf(f_geo, "\n");
+
         }else if (D == 3 && i%q == 0){
             for (j = 0; j < N; j++){
                 // Print the positions in the file
@@ -109,21 +113,26 @@ int main(){
             fprintf(f_geo, "\n");
         }
 
+        // Asign the values for the angles of the previous iteration
         for (j = 1; j < N; j++){
             prev_angle[j] = curr_angle[j];
         }
+        // Calculate the angles in the new positions
         angle(r_p, c_angle_p, N);
 
         for (j = 1; j < N; j++){
+            // Check if a planet has completed a full turn, if so, calculate the period the orbit in years
             if (turn_count(prev_angle[j], curr_angle[j], init_angle[j])){
                 n_turns[j] ++;
                 period[j] = i*h/((n_turns[j])*t_prime*3.154e7);
             }
         }
 
+        // Calculate the total kinetic and potential energy of the system
         T_total = k_energy(v_p, m_p, N, D);
         V_total = p_energy(R_mod_p, m_p, N, D);
 
+        // Calculate the kinetic and potential energy of each planet
         energy(v_p, m_p, R_mod_p, T_p ,V_p, N, D);
         for (j = 0; j < N; j++){
             T[j] = derescaled_energy(T[j], t_prime, M_s, c);

@@ -7,6 +7,7 @@
 //r: matrix (pointer) with the position of all the planets in 3d
 //a: matrix (pointer) with the acceleration of all the planets in 3d
 //m: vector (pointer) with the modified mass of the planets
+//R_mod: metrix (pointer) with the distance between planets, calculated by the function
 //N is the total number of planets
 //D: the dimentions of the simulation
 void acceleration (double* r, double* a, double* m, double* R_mod, int N, int D) {
@@ -71,6 +72,7 @@ void verlet_algorithm(double* r, double* v ,double* a, double* m, double* R_mod,
     }
 }
 
+// Function that rescales the values of distance, velocity and mass
 void rescale (double* r, double* v ,double* a, double* m, 
                     int N, int D, double t_prime, double M_s, double c){
 
@@ -84,6 +86,7 @@ void rescale (double* r, double* v ,double* a, double* m,
     }
 }
 
+// Function that derescales the values of distance, velocity and mass
 void derescale(double* r, double* v ,double* a, double* m, double t, 
                     int N, int D, double h, double t_prime, double M_s, double c){
 
@@ -97,6 +100,7 @@ void derescale(double* r, double* v ,double* a, double* m, double t,
     }
 }
 
+// Function that returns the value of the energy in units of international system
 double derescaled_energy (double E, double t_prime, double M_s, double c){
     return E * M_s *pow(c, 2) /pow(t_prime, 2);
 }
@@ -127,7 +131,8 @@ void change_coord (double* r, double* r_exp, int l, int N, int D){
 }
 
 //Function that calculate the energy for each of the planets of the system to check if the energy is conserved.
-// T: vector with the kinetic energy of the planets
+// T: vector (pointer) with the kinetic energy of the planets
+// V: vector (pointer) with the potential energy of the planets
 void energy (double*v, double* m, double* R_mod, double* T, double* V,int N, int D){
     int i, j, k;
     for (i = 0; i < N; i++){
@@ -141,10 +146,10 @@ void energy (double*v, double* m, double* R_mod, double* T, double* V,int N, int
                 *(V+i) -= (*(m+i))*(*(m+j))/pow(*(R_mod+i*N+j), 0.5);
             }
         }
-        
     }
 }
 
+//Returns the total kinetic energy of the system
 double k_energy (double*v, double* m, int N, int D){
     int i, j, k;
     double T = 0;
@@ -157,6 +162,7 @@ double k_energy (double*v, double* m, int N, int D){
     return T;
 }
 
+//Returns the total potential energy of the system
 double p_energy (double* R_mod, double* m, int N, int D){
     int i, j, k;
     double V = 0;
@@ -172,7 +178,6 @@ double p_energy (double* R_mod, double* m, int N, int D){
 }
 
 // Function that calculate the angle, from the position of a planet, NOT THE SUN. (Only valid on 2D)
-
 void angle(double* r, double* curr_angle, int N){
     int i;
     for (i = 1; i < N; i++){
@@ -184,7 +189,7 @@ void angle(double* r, double* curr_angle, int N){
     }   
 }
 
-//Function that returns the number of turns that the planet has done.
+//Function that checks if the planet has completed an turn.
 bool turn_count(double prev_angle, double curr_angle, double init_angle){
     if (curr_angle > init_angle && prev_angle < init_angle){
         return true;
