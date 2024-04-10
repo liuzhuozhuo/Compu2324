@@ -40,21 +40,14 @@
 # ================================================================================
 
 # Importa los módulos necesarios
-from matplotlib import pyplot as plt
-from matplotlib.animation import FuncAnimation
-from matplotlib.patches import Circle
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 # Parámetros
 # ========================================
 file_in = f"obligatoria1/data/energy.txt" # Nombre del fichero de datos
 file_out = f"obligatoria1/video/energy" # Nombre del fichero de salida (sin extensión)
-
-
-show_trail = True # Muestra la "estela" del planeta
-trail_width = 1 # Ancho de la estela
-save_to_file = False # False: muestra la animación por pantalla,
-total_time = 2 * 3.154e7 
 
 planet_name = ['Sun', 'Mercury', 'Venus', 'Earth', 'Marth', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
 
@@ -91,7 +84,6 @@ for frame_data_str in data_str.split("\n\n"):
 # El número de planetas es el número de líneas en cada bloque
 # Lo calculamos del primer bloque
 nplanets = len(frames_data[0])
-time_array = np.linspace(0, total_time, len(frames_data))
 frames_data = np.transpose(frames_data)
 
 
@@ -102,12 +94,24 @@ frames_data = np.transpose(frames_data)
 for i in range(nplanets):
     fig = plt.figure(figsize=(10, 5))    
     ax = fig.add_subplot(111) 
-    plt.plot(time_array, frames_data[0][i], label = "Cinética")
-    plt.plot(time_array, frames_data[1][i], label = "Potencial")
-    plt.plot(time_array, frames_data[2][i], label = "Cinética + Potencial 1")
-    plt.plot(time_array, frames_data[0][i] + frames_data[1][i], label = "Cinética + Potencial 2")
+    plt.plot(frames_data[0][i], frames_data[1][i], label = "Cinética")
+    plt.plot(frames_data[0][i], frames_data[2][i], label = "Potencial")
+    plt.plot(frames_data[0][i], frames_data[3][i], label = "Cinética + Potencial 1")
+    plt.plot(frames_data[0][i], frames_data[1][i] + frames_data[2][i], label = "Cinética + Potencial 2")
     ax.set_title(f"Energía para {planet_name[i]} (tiempo total: 2 años)")
     ax.grid()
     plt.legend()
-    fig.savefig("{}.pdf".format(f'obligatoria1/plots/energy_{planet_name[i]}'))
+    fig.savefig("{}.png".format(f'obligatoria1/plots/energy_{planet_name[i]}'))
 
+data = pd.read_csv('obligatoria1/data/energy_total.txt', delimiter=",", header=0, names=["t", "K", "V", "TV"])
+
+fig=plt.figure(figsize=(10,6)) #Size of the plot
+ax=fig.add_subplot(111)
+plt.plot(data.t, data.K, 'r-', label='Kinetic',linewidth=2)
+plt.plot(data.t, data.V, 'b-', label='Potential',linewidth=2)
+plt.plot(data.t, data.TV, 'g-', label='Kinetic + Potential',linewidth=2)
+plt.xlabel('t ()',fontsize=12)
+plt.ylabel('E ()',fontsize=12)
+plt.legend(loc='best',fontsize=12)
+plt.grid()
+fig.savefig("{}.png".format('obligatoria1/plots/energy_total'))
