@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include "orbit_func.h"
+#include <time.h>
 
 int main(){
+    clock_t begin = clock();
+
     // Modified arguments for different simulations
     double total_time =  200;// in years
     double interval = 3; // in days
@@ -163,6 +166,12 @@ int main(){
     fclose(f_energy);
     fclose(f_energy_t);
     fclose(f_period);
+
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("%lf\n", time_spent);
 
     return(0);
 }
