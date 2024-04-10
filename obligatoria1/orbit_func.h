@@ -117,13 +117,13 @@ void change_coord (double* r, double* r_exp, int l, int N, int D){
     if (D == 3){
         for(i = 0; i < N; i++){
             for (k = 0; k < D; k++){
-                *(r_exp+i*D+k) =  r_l3[k] - *(r+i*D+k);
+                *(r_exp+i*D+k) =  -r_l3[k] + *(r+i*D+k);
             }
         }
     }else if (D == 2){
         for(i = 0; i < N; i++){
             for (k = 0; k < D; k++){
-                *(r_exp+i*D+k) = r_l2[k] - *(r+i*D+k);
+                *(r_exp+i*D+k) = -r_l2[k] + *(r+i*D+k);
             }
         }
     }
