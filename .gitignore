@@ -54,6 +54,5 @@ Mkfile.old
 dkms.conf
 
 # Others
-*.png
 *.DS_Store
 
