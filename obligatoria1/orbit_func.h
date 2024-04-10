@@ -97,6 +97,10 @@ void derescale(double* r, double* v ,double* a, double* m, double t,
     }
 }
 
+double derescaled_energy (double E, double t_prime, double M_s, double c){
+    return E * M_s *pow(c, 2) /pow(t_prime, 2);
+}
+
 // Function that changes the coordinates so the selected object, l,  is in the origin of coordinates
 // Using the same notation as previous functions, 
 // r_exp: the positions with the coordinates changed
@@ -124,9 +128,8 @@ void change_coord (double* r, double* r_exp, int l, int N, int D){
 
 //Function that calculate the energy for each of the planets of the system to check if the energy is conserved.
 // T: vector with the kinetic energy of the planets
-void energy (double* r, double*v, double* m, double* R_mod, double* T, double* V,int N, int D){
+void energy (double*v, double* m, double* R_mod, double* T, double* V,int N, int D){
     int i, j, k;
-
     for (i = 0; i < N; i++){
         *(T+i) = 0;
         *(V+i) = 0;
@@ -140,6 +143,32 @@ void energy (double* r, double*v, double* m, double* R_mod, double* T, double* V
         }
         
     }
+}
+
+double k_energy (double*v, double* m, int N, int D){
+    int i, j, k;
+    double T = 0;
+
+    for (i = 0; i < N; i++){
+        for (k = 0; k < D; k++){
+            T += *(m+i)*pow(*(v+i*D+k), 2)/2.;
+        }        
+    }
+    return T;
+}
+
+double p_energy (double* R_mod, double* m, int N, int D){
+    int i, j, k;
+    double V = 0;
+
+    for (i = 0; i < N; i++){
+        for (j = 0; j < N; j++){
+            if(i != j) {
+                V -= (*(m+i))*(*(m+j))/pow(*(R_mod+i*N+j), 0.5);
+            }
+        } 
+    }
+    return V;
 }
 
 // Function that calculate the angle, from the position of a planet, NOT THE SUN. (Only valid on 2D)
