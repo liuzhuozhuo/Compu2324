@@ -14,13 +14,14 @@ int main(){
     // The initial condition file has format, where each line --> mass   x   y   z   v_x   v_y   v_z, 
     // separated by tab of the different planets
 
-    FILE *f_init, *f_exp, *f_geo, *f_energy_t, *f_energy; //pointer to the files
+    FILE *f_init, *f_exp, *f_geo, *f_energy_t, *f_energy, *f_period; //pointer to the files
 
     f_init = fopen("data/init_cond.txt", "r"); // open the init_cond file to read
     f_exp = fopen("data/planets_data_.txt", "w"); // open the export file to write
     f_geo = fopen("data/geocentric_data_.txt", "w"); // open the export file to write
     f_energy_t = fopen("data/energy_total.txt", "w");
     f_energy = fopen("data/energy.txt", "w");
+    f_period = fopen("data/period.txt", "w");
 
     // Define t of the simulation, and the step h
     double t = total_time * 3.154e7; //s
@@ -139,11 +140,20 @@ int main(){
         
     }
 
+    for(i = 0; i < N; i++){
+        if(n_turns[i] != 0){
+            fprintf(f_period, "%lf, %lf\n", n_turns[i], period[i]);
+        }else{
+            fprintf(f_period, "%lf, %lf\n", n_turns[i], 0.);
+        }
+    }
+
     fclose(f_init);
     fclose(f_exp);
     fclose(f_geo);
     fclose(f_energy);
     fclose(f_energy_t);
+    fclose(f_period);
 
     return(0);
 }
