@@ -55,4 +55,5 @@ dkms.conf
 
 # Others
 *.DS_Store
+*data_time/
 
