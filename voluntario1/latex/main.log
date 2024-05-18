@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  18 MAY 2024 09:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  18 MAY 2024 10:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -405,12 +405,12 @@ Package hyperref Info: Link coloring OFF on input line 27.
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-<Icons/ugr.jpg, id=24, 1204.5pt x 1204.5pt>
+<Icons/ugr.jpg, id=32, 1204.5pt x 1204.5pt>
 File: Icons/ugr.jpg Graphic file (type jpg)
 <use Icons/ugr.jpg>
 Package pdftex.def Info: Icons/ugr.jpg  used on input line 31.
 (pdftex.def)             Requested size: 85.35826pt x 85.35284pt.
-<Icons/facultad_ciencias.png, id=25, 349.7868pt x 297.2706pt>
+<Icons/facultad_ciencias.png, id=33, 349.7868pt x 297.2706pt>
 File: Icons/facultad_ciencias.png Graphic file (type png)
 <use Icons/facultad_ciencias.png>
 Package pdftex.def Info: Icons/facultad_ciencias.png  used on input line 34.
@@ -433,8 +433,8 @@ LaTeX Info: Redefining \% on input line 1.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.85 \newpage
-              [1] [2] [3] (./main.aux
+l.141 \end{verbatim}
+                     [1] [2] [3] [4] (./main.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -443,21 +443,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 60D6025DB70DFD4F58F0BB052A445BC0;749.
+(rerunfilecheck)             Checksum: 83BDADE82D2941D440E65207704DD2CF;1084.
  ) 
 Here is how much of TeX's memory you used:
- 12592 strings out of 474116
- 201153 string characters out of 5743682
- 1929187 words of memory out of 5000000
- 34810 multiletter control sequences out of 15000+600000
- 564212 words of font info for 57 fonts, out of 8000000 for 9000
+ 12613 strings out of 474116
+ 201491 string characters out of 5743682
+ 1936187 words of memory out of 5000000
+ 34823 multiletter control sequences out of 15000+600000
+ 564380 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,306b,461s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on main.pdf (5 pages, 273003 bytes).
+ 75i,11n,79p,306b,600s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on main.pdf (6 pages, 321749 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 126 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
+ 19 named destinations out of 1000 (max. 500000)
+ 67 words of extra memory for PDF output out of 10000 (max. 10000000)
 

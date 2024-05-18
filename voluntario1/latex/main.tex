@@ -41,8 +41,8 @@
 \begin{center}
     \Huge \textbf{Física Computacional}\\
     		\vspace{0.4cm}
-    \LARGE \textbf{Voluntario 1 :}  
-    Simulacion con dinámica molecular de un gas con un potencial de Lennard-Jones
+    \LARGE \textbf{Voluntario 1:}  
+    Simulación con dinámica molecular de un gas con un potencial de Lennard-Jones
 \end{center}
 
 \vspace{1cm}
@@ -50,7 +50,7 @@
 \vspace{1cm}
 
 \begin{center}
-    \large \textbf{Abstract}\\
+    \large \textbf{Resumen}\\
     		\vspace{0.2cm}
     \normalsize
     En este informe tenemos como objetivo ...
@@ -78,9 +78,74 @@
 
 \section{Planteamiento del problema}
 
+Para poder 
+
+\subsection{Condiciones iniciales}
+Al introducir las condiciones iniciales del sistema, debemos de tener cuidado de
+no colocar 2 partículas muy cercas entre ellas inicialmente, ya que puede provocar
+
+
 \subsection{Condiciones de contorno}
 
-Para introducir la condición de contorno bidimensional periodica
+Para introducir la condición de contorno bidimensional periódica empleamos 
+2 funciones, una para la posición de las partículas, y la otra para la 
+distancia entre partículas.
+
+Empecemos por la posición, para ello al introducir el vector posición 
+debemos de comprobar que en caso de tener alguna coordenada mayor que L,
+imponer la periodicidad, esto lo haremos usando el operador resto. En Python
+definiríamos la siguiente función:
+
+\begin{verbatim}
+    def cond_contorno(r):
+        return r%L
+\end{verbatim}
+
+donde r es un array de NumPy de dimensiones Nx2 donde se almacena la 
+posición de todas las N partículas. 
+
+\vspace{3mm}
+
+Por otro lado para la distancia entre partículas, emplearemos la siguiente
+lógica.
+\begin{enumerate}
+    \item Calculamos el vector $\vec{R}_{ij}$ que une 2 puntos ($r_j, r_i$).
+         Dicho vector formará un ángulo $\theta$ con el eje x.
+    \item A partir de dicho ángulo podemos calcular la distancia H (véase
+        figura), si el módulo de $\vec{R}_{ij}$ supera la distancia H, sabemos 
+        que no estamos calculando la distancia más corta entre los dos 
+        puntos.
+s    \item En dicho caso redefinimos el vector $\vec{R}_{ij}$, como:
+\end{enumerate}
+
+\begin{equation}
+    \vec{R}_{ij} = - \vec{R}_{ij} \frac{H-|\vec{R}_{ij}|}{|\vec{R}_{ij}|}
+    \label{eq:redef_Rij}
+\end{equation}
+
+Implementando en función tendría la siguiente forma:
+
+\begin{verbatim}
+    def compute_distance(r):
+        R = np.zeros((N, N, 2))
+        for i in range(1, N):
+            for j in range(i, N):
+                R[i, j] = r[j]- r[i]
+                angle = np.arctan(R[i, j, 1]/R[i, j, 0])
+                max_length = abs(L/np.cos(angle%(np.pi/4)))
+                norm = np.linalg.norm(R[i, j])
+                if(norm > max_length):
+                    R[i, j] =  -R[i, j] *(max_length - norm) / norm
+                R[j, i] = R[i, j]
+        return R
+\end{verbatim}
+
+\subsection{Potencia Lennard-Jones}
+
+Una vez tenido las funciones para imponer la condición de contorno. Podemos
+calcular la fuerza ejercida entre partículas por el potencial de Lennard-Jones.
+
+
 
 \newpage
 
