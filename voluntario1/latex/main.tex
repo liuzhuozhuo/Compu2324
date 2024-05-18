@@ -13,6 +13,7 @@
 
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\usepackage{macro}
 
 \fancypagestyle{main}{
     \fancyhf{}
@@ -140,10 +141,48 @@ Implementando en función tendría la siguiente forma:
         return R
 \end{verbatim}
 
-\subsection{Potencia Lennard-Jones}
+\subsection{Potencial Lennard-Jones}
 
 Una vez tenido las funciones para imponer la condición de contorno. Podemos
 calcular la fuerza ejercida entre partículas por el potencial de Lennard-Jones.
+
+\begin{equation}
+    V(r) = 4\epsilon\brackets{\parenthesis{\frac{\sigma}{R}}^{12}-
+        \parenthesis{\frac{\sigma}{R}}^{12}}
+    \label{eq:Lennard_Jones_potential}
+\end{equation}
+
+donde se ha usado $R$ en lugar de $r$, para coincidir en la notación empleada en 
+el código.
+
+\vspace{3mm}
+
+Entonces la fuerza de interacción entre las partículas viene dado por:
+
+\begin{equation}
+    \vec{F}(\vec{R}) =  - 4\epsilon\brackets{6\parenthesis{\frac{\sigma}{R}}^{5}-
+    12\parenthesis{\frac{\sigma}{R}}^{11}}
+\end{equation}
+
+Para calcular la aceleración de la partícula, se suma la fuerza de interacción con
+todas las demás las partículas, y se divide por la masa.
+
+Implementando en todo esto en la función que te devuelve la aceleración del sistema
+en función de la posición de las partículas.
+
+\begin{verbatim}
+    def lennard_jones(r):
+        R = compute_distance(r)
+        acc = np.zeros(N, 2)
+        for i in range(N):
+            for j in range(N):
+                if(i!=j):
+                    norm  = np.linalg.norm(R[i, j])
+                    acc[i] = 4*epsilon(6*(sigma/norm)**5-
+                        -12*(sigma/norm)**12)*R[i, j]/(norm*m)
+        return acc
+\end{verbatim}
+
 
 
 

@@ -3,6 +3,6 @@
 \contentsline {section}{\numberline {2}Planteamiento del problema}{1}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Condiciones iniciales}{1}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Condiciones de contorno}{1}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Potencia Lennard-Jones}{2}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Potencial Lennard-Jones}{2}{subsection.2.3}%
 \contentsline {section}{\numberline {A}Tabla de valores}{3}{appendix.Alph1}%
 \contentsline {section}{\numberline {B}Análisis de errores}{4}{appendix.Alph2}%
