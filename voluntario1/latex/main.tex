@@ -1,0 +1,97 @@
+\documentclass[11pt, twoside]{article} %iniciación del documento de tipo artículo, con tamaño de letra 11pt.
+\usepackage[a4paper,total={6in, 8in},left=25mm, asymmetric]{geometry} %Cambio en los bordes y margenes del documento
+
+\usepackage{fancyhdr} %Paquete para organizar y añadir header con los nombres
+
+\usepackage{amsmath}
+
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\usepackage{caption}
+
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+
+\fancypagestyle{main}{
+    \fancyhf{}
+    \fancyhead[L]{\thepage}
+    \fancyhead[RO]{ZhuoZhuo L.}
+    \renewcommand{\headrulewidth}{.4pt}
+    \setlength{\headheight}{52pt}
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{figure}[h!]
+    \minipage{0.87\textwidth}
+	\includegraphics[width=3cm]{Icons/ugr.jpg}
+	\endminipage
+    \minipage{0.87\textwidth}
+	\includegraphics[height = 2.5cm, width=3cm]{Icons/facultad_ciencias.png}
+	\endminipage
+	%%\vspace{-1cm}
+\end{figure}
+
+\vspace{0.3cm}
+
+\begin{center}
+    \Huge \textbf{Física Computacional}\\
+    		\vspace{0.4cm}
+    \LARGE \textbf{Voluntario 1 :}  
+    Simulacion con dinámica molecular de un gas con un potencial de Lennard-Jones
+\end{center}
+
+\vspace{1cm}
+
+\vspace{1cm}
+
+\begin{center}
+    \large \textbf{Abstract}\\
+    		\vspace{0.2cm}
+    \normalsize
+    En este informe tenemos como objetivo ...
+
+\end{center}
+
+\vspace{1cm}
+
+\begin{flushright}
+    \large Zhuo Zhuo Liu 
+    \\
+    \vspace{0.4cm}
+    \textbf{Grado en Física}
+\end{flushright}
+
+\newpage
+
+\setcounter{page}{0}
+\tableofcontents
+\newpage
+
+\pagestyle{main}
+
+\section{Introducción}
+
+\section{Planteamiento del problema}
+
+\subsection{Condiciones de contorno}
+
+Para introducir la condición de contorno bidimensional periodica
+
+\newpage
+
+\appendix
+
+\section{Tabla de valores}
+
+
+\newpage
+
+\section{Análisis de errores}
+
+
+\end{document}
