@@ -96,9 +96,9 @@ def prob_density(psi, N, T):
     return prob
 
 N= 1000
-n_cicles = int(N/8)
+n_cicles = 1
 lamb = 0.3
-T = 4000
+T = 3000
 
 psi, norm, V_prime = iterative_process(T, N, lamb, n_cicles)
 prob = prob_density(psi, N, T)
@@ -107,16 +107,21 @@ fig=plt.figure(figsize=(10,7)) #Size of the plot
 ax=fig.add_subplot(111)
 t = np.arange(0, T, 1)
 plt.grid()
+plt.xlabel('t')
+plt.ylabel('norma')
 plt.plot(t, norm)
-fig.savefig("{}.png".format(f'norma'))
+plt.title(f'N = {N}, n_cicles = {n_cicles}, lambda = {lamb}')
+fig.savefig("{}.png".format(f'obligatoria3/plot_videos/norma_{lamb}'))
 
 fig=plt.figure(figsize=(10,7)) #Size of the plot
 ax=fig.add_subplot(111)
 
 x = np.linspace(0, 1, N)
 line, = ax.plot(x, prob[0])
+plt.title(f'N = {N}, n_cicles = {n_cicles}, lambda = {lamb}')
 plt.plot(x, V_prime/(2*np.pi*n_cicles/N)**2, color='tab:orange')
 plt.grid()
+
 
 def animate (i, prob, line):
     line.set_ydata(prob[i])
@@ -124,8 +129,7 @@ def animate (i, prob, line):
 
 FFwriter = FFMpegWriter(fps=60, extra_args=['-vcodec', 'libx264'])
 
-animation = FuncAnimation(fig, animate, fargs=(prob, line), frames=int(T), blit=True, interval=3, repeat=False)
+animation = FuncAnimation(fig, animate, fargs=(prob, line), frames=int(T), blit=True, interval=0.1, repeat=False)
 
 plt.show()
-
-#animation.save("{}.mp4".format(f"schrodinger_"), dpi=100, writer = FFwriter)
+animation.save("{}.mp4".format(f"obligatoria3/plot_videos//schrodinger_{lamb}"), dpi=100, writer = FFwriter)
