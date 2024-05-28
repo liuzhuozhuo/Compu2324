@@ -1,0 +1,127 @@
+\documentclass[11pt, twoside]{article} %iniciación del documento de tipo artículo, con tamaño de letra 11pt.
+\usepackage[a4paper,total={6in, 8in},left=25mm, asymmetric]{geometry} %Cambio en los bordes y margenes del documento
+
+\usepackage{fancyhdr} %Paquete para organizar y añadir header con los nombres
+
+\usepackage{amsmath}
+
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\usepackage{caption}
+
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{macro}
+
+\fancypagestyle{main}{
+    \fancyhf{}
+    \fancyhead[L]{\thepage}
+    \fancyhead[RO]{ZhuoZhuo L.}
+    \renewcommand{\headrulewidth}{.4pt}
+    \setlength{\headheight}{52pt}
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{figure}[h!]
+    \minipage{0.87\textwidth}
+	\includegraphics[width=3cm]{Icons/ugr.jpg}
+	\endminipage
+    \minipage{0.87\textwidth}
+	\includegraphics[height = 2.5cm, width=3cm]{Icons/facultad_ciencias.png}
+	\endminipage
+	%%\vspace{-1cm}
+\end{figure}
+
+\vspace{0.3cm}
+
+\begin{center}
+    \Huge \textbf{Física Computacional}\\
+    		\vspace{0.4cm}
+    \LARGE \textbf{Voluntario 2:}  
+    Estudio del péndulo doble con un algoritmo Runge-Kutta.
+\end{center}
+
+\vspace{1cm}
+
+\vspace{1cm}
+
+\begin{center}
+    \large \textbf{Resumen}\\
+    		\vspace{0.2cm}
+    \normalsize
+    En este informe tenemos como objetivo ...
+
+\end{center}
+
+\vspace{1cm}
+
+\begin{flushright}
+    \large Zhuo Zhuo Liu 
+    \\
+    \vspace{0.4cm}
+    \textbf{Grado en Física}
+\end{flushright}
+
+\newpage
+
+\setcounter{page}{0}
+\tableofcontents
+\newpage
+
+\pagestyle{main}
+
+\section{Introducción}
+
+\section{Planteamiento del problema}
+Primero debemos de hallar las expresiones de los momentos angulares
+a partir del Lagrangiano del sistema. 
+
+\begin{equation}
+    \mathcal{L} = \dot{\phi}^2 + \dot{\phi}\dot{\psi} \cos(\psi - \phi) +
+     \frac{1}{2}\dot{\psi}^2 - 2g(1-\cos\phi) - g(1-\cos\psi) = 
+\end{equation}
+
+Recordemos que para simplificar las ecuaciones de movimiento, 
+hemos considerado que $\dot{\psi} = 0$
+
+\begin{equation}
+    \mathcal{L} = \dot{\phi}^2 - 2g(1-\cos\phi) - g(1-\cos\psi)
+\end{equation}
+
+\begin{equation}
+    p_{\phi} = \frac{\partial L}{\partial \dot{\phi}} = 2\dot{\phi} + 
+     \xrightarrow{} \dot{\phi} = \frac{p_{\phi}}{2}
+\end{equation}
+
+\begin{equation}
+    p_{\psi} = \frac{\partial L}{\partial \dot{\psi}} = 0 
+\end{equation}
+
+Expresando la Hamiltoniana del sistema en términos de los momentos 
+angulares, obtenemos:
+
+\begin{equation}
+    H = \frac{p^2_\phi}{4} + 2g(1 - \cos\phi) + g(1 - \cos\psi)
+\end{equation}
+
+\subsection{Ecuaciones del movimiento}
+
+
+\newpage
+
+\appendix
+
+\section{Tabla de valores}
+
+
+\newpage
+
+\section{Análisis de errores}
+
+
+\end{document}
