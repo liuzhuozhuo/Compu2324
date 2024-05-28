@@ -56,7 +56,7 @@ x_max = 10
 y_min = -0
 y_max = 10
 
-interval = 5 # Tiempo entre fotogramas en milisegundos
+interval = 1 # Tiempo entre fotogramas en milisegundos
 show_trail = False # Muestra la "estela" del planeta
 trail_width = 0.8 # Ancho de la estela
 save_to_file = False # False: muestra la animación por pantalla,
@@ -66,7 +66,7 @@ dpi = 150 # Calidad del vídeo de salida (dots per inch)
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
 # el radio de cada uno
-planet_radius = 0.5
+planet_radius = 0.45
 
 
 
