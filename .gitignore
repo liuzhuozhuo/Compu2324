@@ -7,6 +7,12 @@
 *.obj
 *.elf
 
+#Latex output
+*.aux
+*.log
+*.synctex.gz
+*.toc
+
 # Linker output
 *.ilk
 *.map
