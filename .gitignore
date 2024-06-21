@@ -12,6 +12,8 @@
 *.log
 *.synctex.gz
 *.toc
+*.fdb_latexmk
+*.synctex(busy)
 
 # Linker output
 *.ilk
