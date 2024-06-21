@@ -47,8 +47,8 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "voluntario1/datos.txt" # Nombre del fichero de datos
-file_out = "voluntario1/videos/test" # Nombre del fichero de salida (sin extensión)
+file_in = "voluntario1/datos/datos_1.txt" # Nombre del fichero de datos
+file_out = "voluntario1/videos/v0_1" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
 x_min = -0
@@ -59,9 +59,9 @@ y_max = 10
 interval = 1 # Tiempo entre fotogramas en milisegundos
 show_trail = False # Muestra la "estela" del planeta
 trail_width = 0.8 # Ancho de la estela
-save_to_file = False # False: muestra la animación por pantalla,
+save_to_file = True # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
-dpi = 150 # Calidad del vídeo de salida (dots per inch)
+dpi = 80 # Calidad del vídeo de salida (dots per inch)
 
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
