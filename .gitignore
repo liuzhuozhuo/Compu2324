@@ -14,6 +14,7 @@
 *.toc
 *.fdb_latexmk
 *.synctex(busy)
+*.fls
 
 # Linker output
 *.ilk
