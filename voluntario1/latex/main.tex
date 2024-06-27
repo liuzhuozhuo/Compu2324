@@ -159,6 +159,39 @@ Por último solo queda añadir una función que nos permita calcular la nueva po
 de las partículas, y la nueva velocidad de las partículas. Para ello emplearemos el
 algoritmo de Verlet. 
 
+\section{Análisis de Resultados}
+
+\subsection{Comparación con la distribución de Maxwell-Boltzmann}
+
+Partiendo de las condiciones iniciales propuestas (20 átomos de Argón en una caja 
+de $L=10$, y velocidades de módulo 1 con dirección aleatoria), se ha simulado el
+experimento se ha simulado un tiempo $t = 50$, con un paso del tiempo 
+$\Delta t = 0.002$.
+
+La evolución del sistema puede visualizarse en formato gif, en el 
+
+Representando la evolución de la energía cinética, potencial y total del sistema
+a lo largo del tiempo, se obtiene la figura \ref{fig:energias}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{plots/energia_1.png}
+    \caption{Evolución de las energías del sistema}
+    \label{fig:energias}
+\end{figure}
+
+La temperatura lo podemos calcular por el teorema de equipartición:
+
+\begin{equation}
+    k_B T = \frac{m}{2}\langle v_x^2 + v_y^2 \rangle
+\end{equation}
+
+donde considerando que $k_B =1$, y $m=1$, se tiene que la temperatura es igual a
+$T = 1.$, 
+
+Comparando la distribución de velocidades antes y despues de la relajación con la 
+de Maxwell-Boltzmann,
+
 \newpage
 
 \appendix
