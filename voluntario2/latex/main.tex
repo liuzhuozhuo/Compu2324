@@ -78,38 +78,64 @@
 \section{Introducción}
 
 \section{Planteamiento del problema}
+\subsection{Ecuaciones del movimiento}
 Primero debemos de hallar las expresiones de los momentos angulares
 a partir del Lagrangiano del sistema. 
 
 \begin{equation}
     \mathcal{L} = \dot{\phi}^2 + \dot{\phi}\dot{\psi} \cos(\psi - \phi) +
-     \frac{1}{2}\dot{\psi}^2 - 2g(1-\cos\phi) - g(1-\cos\psi) = 
+     \frac{1}{2}\dot{\psi}^2 - 2g(1-\cos\phi) - g(1-\cos\psi) 
 \end{equation}
 
-Recordemos que para simplificar las ecuaciones de movimiento, 
-hemos considerado que $\dot{\psi} = 0$
+Hallamos las expresiones del momento angular $p_\phi$ y $p_\psi$, en función
+de las velocidades angulares $\dot{\phi}$ y $\dot{\psi}$ através de las 
+parciales de $\mathcal{L}$ con respecto a las velocidades angulares.
 
 \begin{equation}
-    \mathcal{L} = \dot{\phi}^2 - 2g(1-\cos\phi) - g(1-\cos\psi)
-\end{equation}
-
-\begin{equation}
-    p_{\phi} = \frac{\partial L}{\partial \dot{\phi}} = 2\dot{\phi} + 
-     \xrightarrow{} \dot{\phi} = \frac{p_{\phi}}{2}
+    p_\phi = \frac{\partial \mathcal{L}}{\partial \dot{\phi}} = 2\dot{\phi} + \dot{\psi}\cos(\psi - \phi)
 \end{equation}
 
 \begin{equation}
-    p_{\psi} = \frac{\partial L}{\partial \dot{\psi}} = 0 
+    p_\psi = \frac{\partial \mathcal{L}}{\partial \dot{\psi}} = \dot{\psi} + \dot{\phi}\cos(\psi - \phi)
 \end{equation}
 
-Expresando la Hamiltoniana del sistema en términos de los momentos 
-angulares, obtenemos:
+Despejando las velocidades en función del momento, permite expresar el 
+Hamiltoniano en función de dichos momentos.
 
 \begin{equation}
-    H = \frac{p^2_\phi}{4} + 2g(1 - \cos\phi) + g(1 - \cos\psi)
+    \dot{\phi} = \frac{p_\phi - p_\psi\cos(\psi - \phi)}{2-\cos^2(\psi - \phi)}, \quad 
+    \dot{\psi} = \frac{2p_\psi - p_\phi\cos(\psi - \phi)}{2-\cos^2(\psi - \phi)}
 \end{equation}
 
-\subsection{Ecuaciones del movimiento}
+\begin{equation}
+    \begin{split}
+        H &= \dot{\phi}^2 + \dot{\phi}\dot{\psi} \cos(\psi - \phi) +
+\frac{1}{2}\dot{\psi}^2 + 2g(1-\cos\phi) + g(1-\cos\psi)  \\
+ &=\frac{p_\phi^2 + p_\psi^2 - 2p_\phi p_\psi \cos(\psi - \phi)}{2-\cos^2(\psi - \phi)} + 2g(1-\cos\phi) + g(1-\cos\psi)
+    \end{split}
+\end{equation}
+
+De donde se obtiene las ecuaciones de movimiento a partir de las 
+ecuaciones de Hamilton.
+
+\begin{equation}
+        \dot{\phi} = \frac{\partial H}{\partial p_\phi} = \frac{p_\phi - p_\psi\cos(\psi - \phi)}{2-\cos^2(\psi - \phi)} 
+\end{equation}
+
+\begin{equation}
+    \dot{\psi} = \frac{\partial H}{\partial p_\psi} = \frac{2p_\psi - p_\phi\cos(\psi - \phi)}{2-\cos^2(\psi - \phi)}
+\end{equation}
+
+\begin{equation}
+    \dot{p_\phi} = -\frac{\partial H}{\partial \phi} =  \frac{p_\phi p_\psi \cos^2(\psi - \phi) - (2p_\psi^2 + p_\phi^2)\cos(\psi - \phi) + 2p_\phi p_\psi }{(2-\cos^2(\psi - \phi))^2}2\sin(\phi - \psi) -2g\sin\phi
+\end{equation}
+
+\begin{equation}
+    \dot{p_\psi} = -\frac{\partial H}{\partial \psi} =  \frac{p_\phi p_\psi \cos^2(\psi - \phi) - (2p_\psi^2 + p_\phi^2)\cos(\psi - \phi) + 2p_\phi p_\psi }{(2-\cos^2(\psi - \phi))^2}2\sin(\psi - \phi) -g\sin\psi
+\end{equation}
+
+\subsection{Condiciones iniciales}
+
 
 
 \newpage
