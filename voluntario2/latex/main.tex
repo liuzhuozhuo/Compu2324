@@ -18,7 +18,7 @@
 \fancypagestyle{main}{
     \fancyhf{}
     \fancyhead[L]{\thepage}
-    \fancyhead[RO]{ZhuoZhuo L.}
+    \fancyhead[RO]{Z. Liu}
     \renewcommand{\headrulewidth}{.4pt}
     \setlength{\headheight}{52pt}
 }
@@ -54,14 +54,19 @@
     \large \textbf{Resumen}\\
     		\vspace{0.2cm}
     \normalsize
-    En este informe tenemos como objetivo ...
+    En este informe tenemos como objetivo estudiar el comportamiento del 
+    doble pendulo, empleando el método de Runge-Kutta para simular el
+    movimiento del sistema. Se estudiará la relación entre sus variables
+    y la energía total del sistema, para distintas condiciones iniciales.
+    Además se analizará la estabilidad del sistema y la influencia pequeñas 
+    perturbaciones.
 
 \end{center}
 
 \vspace{1cm}
 
 \begin{flushright}
-    \large Zhuo Zhuo Liu 
+    \large ZhuoZhuo Liu 
     \\
     \vspace{0.4cm}
     \textbf{Grado en Física}
@@ -135,6 +140,46 @@ ecuaciones de Hamilton.
 \end{equation}
 
 \subsection{Condiciones iniciales}
+
+Para este tipos de sistemas, las condiciones iniciales son de suma 
+importancia para los resultados obtenidos. Tendremos 3 parámetros que tomar
+en cuenta, la energía total del sistema y la ángulo inicial de $\phi$ y
+$\psi$, ya que se ha considerado $\dot{p}_\psi (t=0) = 0$ para simplificar.
+
+Depediendo el objetivo del apartado, se irá variando la energía total 
+del sistema, los ángulos iniciales, o ambos. Pero es importante tener en
+cuenta que la energía total del sistema no puede ser negativa, ya que
+la energía potencial es siempre positiva, esto produce ángulos iniciales
+incompatibles con la energía propuesta. De modo que para los estudios donde
+se varíe la energía, emplearemos ángulos iniciales relativamente pequeños, 
+para que sea compatible con la menor energía propuesta.
+
+\subsection{Unidades empleadas}
+
+Aunque se podría realizar en unidades arbitrarias, en el análisis 
+de los resultados se asumirá que todos los valores mensionados se 
+encuentran en el sistema internacional. Se debe de tomar en cuenta que 
+en el hamiltoniano no aparece ni la masa ni la longitud de los hilos 
+ya que se han considerado que son iguales con valor 1, es decir 1 kg y 
+1 m respectivamente. 
+
+Tambien se ha considerado la gravedad terrestre, de modo que 
+$g = 9.81 \text{m/s}^2$. Y para el resto de variables tendrán las 
+siguientes unidades:
+
+\begin{itemize}
+    \item $\phi$ y $\psi$ en radianes.
+    \item $p_\phi$ y $p_\psi$ en $[\text{kg m}^2/\text{s}]$.
+    \item $E$ en $[\text{kg m}^2/\text{s}^2]$, es decir en julios [J].
+\end{itemize}
+
+\section{Análisis de resultados}
+
+Para estudiar el movimiento del sistema, emplearemos los mapas de 
+Poincaré para visualizar la relación entre las variables del sistema. 
+Comenzando con la relación entre $\phi$ y $\psi$, para distintas 
+energías (E = 1, 3, 5, 10, 15). 
+
 
 
 
