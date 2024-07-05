@@ -47,8 +47,8 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "voluntario1/datos/datos_1.txt" # Nombre del fichero de datos
-file_out = "voluntario1/videos/v0_1" # Nombre del fichero de salida (sin extensión)
+file_in = "voluntario1/datos/posiciones_vel_init_1.txt" # Nombre del fichero de datos
+file_out = "voluntario1/videos/apartado_1" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
 x_min = -0
@@ -56,17 +56,17 @@ x_max = 10
 y_min = -0
 y_max = 10
 
-interval = 1 # Tiempo entre fotogramas en milisegundos
+interval = 3 # Tiempo entre fotogramas en milisegundos
 show_trail = False # Muestra la "estela" del planeta
 trail_width = 0.8 # Ancho de la estela
-save_to_file = True # False: muestra la animación por pantalla,
+save_to_file = False # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
 dpi = 80 # Calidad del vídeo de salida (dots per inch)
 
 # Radio del planeta, en las mismas unidades que la posición
 # Puede ser un número (el radio de todos los planetas) o una lista con
 # el radio de cada uno
-planet_radius = 0.45
+planet_radius = 0.5
 
 
 
@@ -109,6 +109,7 @@ nplanets = len(frames_data[0])
 # Crea los objetos figure y axis
 fig = plt.figure(figsize=(7, 7))    
 ax = fig.add_subplot(111) 
+fig.suptitle('Animación de 20 átomos de argón con posiciones iniciales \n aleatorias, y velocidades de módulo 1 en dirección aleatoria.', fontsize=14)
 
 # Define el rango de los ejes
 ax.axis("equal")  # Misma escala para ejes X e Y
