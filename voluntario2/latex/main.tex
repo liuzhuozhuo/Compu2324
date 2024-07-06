@@ -144,7 +144,7 @@ ecuaciones de Hamilton.
 Para este tipos de sistemas, las condiciones iniciales son de suma 
 importancia para los resultados obtenidos. Tendremos 3 parámetros que tomar
 en cuenta, la energía total del sistema y la ángulo inicial de $\phi$ y
-$\psi$, ya que se ha considerado $\dot{p}_\psi (t=0) = 0$ para simplificar.
+$\psi$, ya que se ha considerado $\dot{\psi} (t=0) = 0$ para simplificar.
 
 Depediendo el objetivo del apartado, se irá variando la energía total 
 del sistema, los ángulos iniciales, o ambos. Pero es importante tener en
@@ -178,8 +178,45 @@ siguientes unidades:
 Para estudiar el movimiento del sistema, emplearemos los mapas de 
 Poincaré para visualizar la relación entre las variables del sistema. 
 Comenzando con la relación entre $\phi$ y $\psi$, para distintas 
-energías (E = 1, 3, 5, 10, 15). 
+energías (E = 1, 3, 5, 10, 15). Obteniendo la figura 
+\ref{fig:poincare_energias}.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{plots/poincare_energias.png}
+    \caption{Mapa de Poincaré para distintas energías}
+    \label{fig:poincare_energias}
+\end{figure}
+
+Centrandonos en la energía $E = 1$ (figura \ref{fig:poincare_energia_1}) 
+se puede observar que el sistema tiende a ciertas configuraciones, 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{plots/poincare_energias_1.png}
+    \caption{Mapa de Poincaré para E = 1}
+    \label{fig:poincare_energia_1}
+\end{figure}
+
+Para energías mayores, se va deformando la forma inicial 
+
+A grandes rasgos, se puede observar 
+
+
+Representado los ángulos con sus velocidades angulares
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{plots/poincare_energias_phi_psi.png}
+    \caption{Relación entre $\phi$ y $\dot{\phi}$}
+    \label{fig:poincare_energias_phi}
+\end{figure}
+
+\subsection{Coeficiente de Lyapunov}
+
+Para un sistema caótico, el coeficiente de Lyapunov nos permite
+cuantificar la tasa de divergencia de dos trayectorias infinitamente
+cercanas.
 
 
 
