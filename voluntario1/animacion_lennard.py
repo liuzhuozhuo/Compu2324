@@ -47,14 +47,15 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "voluntario1/datos_4/posiciones_vel_init_0_hex.txt" # Nombre del fichero de datos
+file_in = "voluntario1/datos_temp_crit/posiciones_vel_init_0.txt" # Nombre del fichero de datos
 file_out = "voluntario1/videos/apartado_1" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
+L = 4
 x_min = -0
-x_max = 5
+x_max = L
 y_min = -0
-y_max = 5
+y_max = L
 
 interval = 3 # Tiempo entre fotogramas en milisegundos
 show_trail = False # Muestra la "estela" del planeta
@@ -67,8 +68,6 @@ dpi = 80 # Calidad del vídeo de salida (dots per inch)
 # Puede ser un número (el radio de todos los planetas) o una lista con
 # el radio de cada uno
 planet_radius = 0.1
-
-
 
 # Lectura del fichero de datos
 # ========================================
