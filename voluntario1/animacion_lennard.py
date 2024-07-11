@@ -47,7 +47,7 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "voluntario1/datos_apartado_2/posiciones_vel_init_x.txt" # Nombre del fichero de datos
+file_in = "voluntario1/datos_apartado_3/posiciones_vel_init_0.txt" # Nombre del fichero de datos
 file_out = "voluntario1/videos/apartado_1" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
