@@ -47,17 +47,17 @@ import numpy as np
 
 # Parámetros
 # ========================================
-file_in = "voluntario1/datos_apartado_3/posiciones_vel_init_0.txt" # Nombre del fichero de datos
+file_in = "voluntario1/datos_apartado_4/posiciones_0_rand.txt" # Nombre del fichero de datos
 file_out = "voluntario1/videos/apartado_1" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
-L = 10
+L = 4
 x_min = -0
 x_max = L
 y_min = -0
 y_max = L
 
-interval = 3 # Tiempo entre fotogramas en milisegundos
+interval = 5 # Tiempo entre fotogramas en milisegundos
 show_trail = False # Muestra la "estela" del planeta
 trail_width = 0.8 # Ancho de la estela
 save_to_file = False # False: muestra la animación por pantalla,
