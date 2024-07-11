@@ -54,7 +54,10 @@
     \large \textbf{Resumen}\\
     		\vspace{0.2cm}
     \normalsize
-    En este informe tenemos como objetivo ...
+    En este informe tenemos como objetivo estudiar el comportamiento de un sistema que
+    interactuan mediante un potencial de Lennar-Jones. Princialmente se estudiará 
+    la distribución de velocidades de las partículas, la ecuación de estado y la 
+    transición de fase.
 
 \end{center}
 
@@ -159,16 +162,19 @@ Por último solo queda añadir una función que nos permita calcular la nueva po
 de las partículas, y la nueva velocidad de las partículas. Para ello emplearemos el
 algoritmo de Verlet. 
 
+\subsection{Unidades empleadas}
+
+\newpage
+
 \section{Análisis de Resultados}
 
 \subsection{Comparación con la distribución de Maxwell-Boltzmann}
 
 Partiendo de las condiciones iniciales propuestas (20 átomos de Argón en una caja 
-de $L=10$, y velocidades de módulo 1 con dirección aleatoria), se ha simulado el
-experimento se ha simulado un tiempo $t = 50$, con un paso del tiempo 
-$\Delta t = 0.002$.
-
-La evolución del sistema puede visualizarse en formato gif, en el 
+de $L=10$, distribuida aleatoriamente, y velocidades de módulo 1 con dirección aleatoria), se ha simulado el
+experimento durante un tiempo $t = 50$, con un paso del tiempo 
+$\Delta t = 0.002$. La evolución del sistema puede visualizarse en formato gif, 
+en el propio repositorio ()
 
 Representando la evolución de la energía cinética, potencial y total del sistema
 a lo largo del tiempo, se obtiene la figura \ref{fig:energias}.
@@ -180,7 +186,10 @@ a lo largo del tiempo, se obtiene la figura \ref{fig:energias}.
     \label{fig:energias}
 \end{figure}
 
-La temperatura lo podemos calcular por el teorema de equipartición:
+Se observa como inicialmente la energía cinética aumenta rapidamente, mientras que
+la potencial disminuye al mismo ritmo
+
+La temperatura se puede obtener por el teorema de equipartición:
 
 \begin{equation}
     k_B T = \frac{m}{2}\langle v_x^2 + v_y^2 \rangle
@@ -190,7 +199,8 @@ donde considerando que $k_B =1$, y $m=1$, se tiene que la temperatura es igual a
 $T = 1.$, 
 
 Comparando la distribución de velocidades antes y despues de la relajación con la 
-de Maxwell-Boltzmann,
+de Maxwell-Boltzmann. Inicialmente todas las partículas tienen la misma velocidad
+($v=1$), por lo que la distribución de velocidades es una delta de Dirac.
 
 \subsection{Ecuación de estado}
 
