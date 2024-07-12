@@ -72,7 +72,7 @@ vec_pendulo = run_code(4, 0, 0)
 pos_pendulo_1 = polar_to_cart(vec_pendulo[:, 0])
 pos_pendulo_2 = pos_pendulo_1 + polar_to_cart(vec_pendulo[:, 1])
 
-f = open("voluntario2\datos_optimizacion\datos.txt", "w")
+f = open("voluntario2/datos_optimizacion/datos.txt", "w")
 for i in range(int(n_interation)):
     if i%10 == 0:
         f.write(f"{pos_pendulo_1[0, i]}, {pos_pendulo_1[1, i]}\n")
@@ -83,5 +83,5 @@ f.close()
 stop = timeit.default_timer()
 timer = stop - start
 
-f_timer = open(f"voluntario2\datos_optimizacion\datos_{machine}.txt", "a+")
+f_timer = open(f"voluntario2/datos_optimizacion/datos_{machine}.txt", "a+")
 f_timer.write(f"{h}, {n_interation}, {time},  {timer}\n")
