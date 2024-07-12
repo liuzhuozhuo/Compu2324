@@ -9,7 +9,7 @@ start = timeit.default_timer()
 
 g = 9.81
 l = 1
-h = 1
+h = 1e-6
 
 time = 100
 
@@ -85,3 +85,4 @@ timer = stop - start
 
 f_timer = open(f"datos_optimizacion/datos_{machine}.txt", "a+")
 f_timer.write(f"{h}, {n_interation}, {time},  {timer}\n")
+f_timer.close()
