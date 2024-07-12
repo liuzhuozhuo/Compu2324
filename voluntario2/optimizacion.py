@@ -3,15 +3,15 @@ from numba import jit
 import matplotlib.pyplot as plt
 import timeit
 
-machine = "windows"
+machine = "joel"
 
 start = timeit.default_timer() 
 
 g = 9.81
 l = 1
-h = 0.001
+h = 1
 
-time = 100000
+time = 100
 
 # Usado para las graficas
 dot = '\u0307'
@@ -72,7 +72,7 @@ vec_pendulo = run_code(4, 0, 0)
 pos_pendulo_1 = polar_to_cart(vec_pendulo[:, 0])
 pos_pendulo_2 = pos_pendulo_1 + polar_to_cart(vec_pendulo[:, 1])
 
-f = open("voluntario2/datos_optimizacion/datos.txt", "w")
+f = open("datos_optimizacion/datos.txt", "w")
 for i in range(int(n_interation)):
     if i%10 == 0:
         f.write(f"{pos_pendulo_1[0, i]}, {pos_pendulo_1[1, i]}\n")
@@ -83,5 +83,5 @@ f.close()
 stop = timeit.default_timer()
 timer = stop - start
 
-f_timer = open(f"voluntario2/datos_optimizacion/datos_{machine}.txt", "a+")
+f_timer = open(f"datos_optimizacion/datos_{machine}.txt", "a+")
 f_timer.write(f"{h}, {n_interation}, {time},  {timer}\n")
