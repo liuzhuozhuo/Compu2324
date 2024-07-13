@@ -80,19 +80,26 @@
 
 \section{Introducción}
 
+El potencial de Lennard-Jones es un modelo que describe la interacción entre dos
+partículas neutras, y es ampliamente utilizado en la simulación de sistemas
+de partículas, debido a su simpleza, sin embargo sigue siendo capaz de describir
+las interacciones de una manera realista.
+
 \section{Planteamiento del problema}
 
-Para poder 
+Para poder simular el sistema, se ha de tener en cuenta muchas cosas, como las 
+condiciones iniciales o las condiciones de contorno, las cuales se describirán a 
+continuación, junto a otros problemas a tener en cuenta.
 
 \subsection{Condiciones iniciales}
-Al introducir las condiciones iniciales del sistema, debemos de tener cuidado de
-no colocar 2 partículas muy cercas entre ellas inicialmente, ya que puede provocar
-que las partículas adquieran mucha velocidad. 
+Comenzando por las condiciones iniciales del sistema, al introducir estas, 
+debemos de tener cuidado de no colocar 2 partículas muy cercas entre ellas, ya que 
+puede provocar que las partículas adquieran mucha velocidad, colapsando el sistema.
 
-Para ello consideramos una cuadrícula separada por una distancia $L/5$ en ambos 
+Para ello consideramos una cuadrícula separada por una distancia $2\sigma$ en ambos 
 ejes, y permitimos que las partículas se desplace una distancia aleatoria entre 0 y 1
-de dicha posición. Y una velocidad con dirección aleatoria, pero con módulo unidad.
-
+de dicha posición. De esta manera se asegura que la distancia mínima posible inicialmente
+sea de $1\sigma$. 
 \subsection{Condiciones de contorno}
 
 Para introducir la condición de contorno bidimensional periódica empleamos 
@@ -114,9 +121,7 @@ ambas funciones serían iguales.
 
 Una vez tenida estas condiciones, ya podemos calcular la distancia entre partículas,
 estas distancias será importantes tanto para calcular las fuerzas de interacción, como 
-la energía potencial del sistema. 
-
-Guardaremos estas distancias o mejor dicho los vectores que las unen en una matriz 
+la energía potencial del sistema. Guardaremos estas distancias o mejor dicho los vectores que las unen en una matriz 
 de dimensiones $N\times N\times 2$, donde $N$ es el número de partículas, y 2 indica
 las dimensiones del espacio. El cálculo de estas distancias es sencillo, siendo la
 resta entre las posiciones de las partículas. 
@@ -132,11 +137,10 @@ las distancias entre partículas, podemos calcular la fuerza de interacción ent
 partículas por el potencial de Lennard-Jones.
 
 \begin{equation}
-    V(r) = 4\epsilon\brackets{\parenthesis{\frac{\sigma}{R}}^{12}-
-        \parenthesis{\frac{\sigma}{R}}^{12}}
+    V(R) = 4\epsilon\brackets{\parenthesis{\frac{\sigma}{R}}^{12}-
+        \parenthesis{\frac{\sigma}{R}}^{12}},
     \label{eq:Lennard_Jones_potential}
 \end{equation}
-
 donde se ha usado $R$ en lugar de $r$, para coincidir en la notación empleada en 
 el código.
 
@@ -150,19 +154,37 @@ Entonces la fuerza de interacción entre las partículas viene dado por:
 \end{equation}
 
 Para calcular la aceleración de la partícula, se suma la fuerza de interacción con
-todas las demás las partículas, y se divide por la masa.
-
-Implementando en todo esto en la función que te devuelve la aceleración del sistema
+todas las demás las partículas, y se divide por la masa. Implementando en todo esto en la función que te devuelve la aceleración del sistema
 en función de la posición de las partículas.
-
-
-\subsection{Algoritmo de Verlet}
 
 Por último solo queda añadir una función que nos permita calcular la nueva posición
 de las partículas, y la nueva velocidad de las partículas. Para ello emplearemos el
 algoritmo de Verlet. 
 
 \subsection{Unidades empleadas}
+
+Se ha empleado el sistema de unidades reducidas, donde la energía y la distancia se 
+expresan en función de una cantidad característica, en este caso $\epsilon$ y $\sigma$. 
+
+
+\subsection{Cálculo de presión}
+
+Para obtener la ecuación de estado, es necesario calcular la presión del sistema. 
+En este caso el sistema no tiene paredes rígidas, sino una condición de contorno 
+periódica, sin embargo esto no afecta al cálculo de la presión, ya que la presión 
+depende del momento transferido. De modo que se supondrá que si una partícula cruza
+por las paredes del sistema, el doble del momento con la que lo hace será transferido 
+a la pared. Permitiendo calcular el momento total transferido, la fuerza por lo tanto
+sería el momento total transferido dividido por el tiempo considerado. 
+
+Por último, la presión se obtiene dividiendo la fuerza por el área, pero en este caso
+el sistema es bidimensional, de modo que la presión se obtiene dividiendo la fuerza
+por la longitud de la caja.
+
+Una última consideración, solo se ha de empezar a calcular la presión una vez que el
+sistema se haya relajado, incluir el periodo de tiempo anterior de ello puede producir
+resultados incorrectos. Este mismo razonamiento se puede aplicar para el cálculo de
+la temperatura.
 
 \newpage
 
@@ -181,28 +203,103 @@ a lo largo del tiempo, se obtiene la figura \ref{fig:energias}.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{plots/energia_vel_init_1.png}
+    \includegraphics[width=0.9\textwidth]{plots/apartado_1_energia_1.png}
     \caption{Evolución de las energías del sistema}
     \label{fig:energias}
 \end{figure}
 
-Se observa como inicialmente la energía cinética aumenta rapidamente, mientras que
-la potencial disminuye al mismo ritmo
+Se observa como inicialmente la energía cinética aumenta rápidamente, mientras que
+la potencial disminuye al mismo ritmo hasta llegar a un punto donde el promedio de 
+tanto la energía cinética como la potencial se estabiliza, indicando la relajación 
+del sistema, esto ocurre alrededor de $t=10$. Sin embargo para estar seguro, en las 
+simulaciones donde la relajación es importante, se esperará un tiempo mayor, $t=20$.
 
 La temperatura se puede obtener por el teorema de equipartición:
 
 \begin{equation}
-    k_B T = \frac{m}{2}\langle v_x^2 + v_y^2 \rangle
+    k_B T = \frac{m}{2}\langle v_x^2 + v_y^2 \rangle,
 \end{equation}
+donde se ha considerando que $k_B =1$, y $m=1$.
 
-donde considerando que $k_B =1$, y $m=1$, se tiene que la temperatura es igual a
-$T = 1.$, 
+La temperatura obtenida dependerá de la configuración inicial del sistema, 
+principalmente de la distribución inicial de partículas, al ser esta aleatoria,
+la temperatura obtenida oscilará, incluso para la misma velocidad inicial. 
+La temperatura obtenida será indicado en el título de las figuras.
 
-Comparando la distribución de velocidades antes y despues de la relajación con la 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/histograma_velocidad_1.png}
+    \caption{Representación del histograma de velocidades para $v, v_x, v_y$ en valor
+    absoluto, comparado con las distribuciones de Maxwell-Boltzmann correspondientes. 
+    Para velocidad inicial $v=1$, distribuida uniformemente en todas las direcciones.}
+    \label{fig:histograma_velocidad_1}
+\end{figure}
+
+Comparando la distribución de velocidades antes y después de la relajación con la 
 de Maxwell-Boltzmann. Inicialmente todas las partículas tienen la misma velocidad
-($v=1$), por lo que la distribución de velocidades es una delta de Dirac.
+($v=1$), por lo que la distribución de velocidades es una delta de Dirác. Mientras 
+que después de la relajación, la distribución de velocidades se asemeja a la de
+Maxwell-Boltzmann, como se observa en la figura \ref{fig:histograma_velocidad_1}.
+
+Este comportamiento se verifica para otras configuraciones iniciales, repitiendo la 
+misma experiencia, pero con velocidades únicamente en el eje $x$, de módulo distribuido
+uniformemente entre 0 y 1. Se obtiene la figura \ref{fig:apartado_2_energia_x} y 
+\ref{fig:histograma_velocidad_x}, indicando la evolución de las energías y la distribución
+de velocidades respectivamente.
+
+Empezando por las energías se observa el mismo comportamiento explicado anteriormente, una 
+subida inicial hasta llegar a la relajación para la energía cinética, y una bajada hasta 
+llegar a la relajación para la energía potencial. Luego para la distribución de velocidades,
+se observa que se asemeja a la de Maxwell-Boltzmann, y de manera casi idéntica a la 
+figura \ref{fig:histograma_velocidad_1}. De modo que una vez llegado a la relajación,
+ambos sistemas son indistinguibles.
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/apartado_2_energia_x.png}
+    \caption{Evolución de las energías del sistema, para velocidad inicial distribuida 
+    uniformemente entre 0 y 1, solo en el eje $x$.}
+    \label{fig:apartado_2_energia_x}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/histograma_velocidad_x.png}
+    \caption{Representación del histograma de velocidades para $v, v_x, v_y$ en valor
+    absoluto, comparado con las distribuciones de Maxwell-Boltzmann correspondientes. 
+    Para velocidad inicial distribuida uniformemente entre 0 y 1, solo en el eje $x$.}
+    \label{fig:histograma_velocidad_x}
+\end{figure}
+
+\newpage
 
 \subsection{Ecuación de estado}
+Considerando un sistema de 16 partículas en una caja de $L=4$, se ha simulado el
+experimento durante un tiempo $t=50$, con un paso del tiempo $\Delta t = 0.002$.
+En este caso al reducir el tamaño del sistema, se ha tenido que modificar las condiciones
+iniciales, para garantizar la estabilidad del sistema, también se ha quitado el carácter
+aleatorio de las posiciones iniciales, para poder realizar mejores comparaciones entre 
+las diferentes temperaturas.
+
+Tras calcular la presión alcanzada por el sistema, a diferentes temperaturas (para ello
+se ha planteado diferentes velocidades iniciales $v = 0, 1, 2, 3, 4$), se obtiene la 
+figura \ref{fig:ecuacion_estado}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/ajuste_presion.png}
+    \caption{}
+    \label{fig:ecuacion_estado}
+\end{figure}
+
+Se ha realizado un ajuste lineal a los datos obtenidos, para obtener la ecuación de
+estado del sistema:
+
+\begin{equation}
+    P = 0.812 T + 0.076, \text{ con } R^2 = 0.999
+\end{equation}
+
 
 \subsection{Transición de fase sólido-líquido}
 Para estudiar la transición de fase sólido-líquido, primero estudiaremos el estado
@@ -212,17 +309,23 @@ que el sistema evoluciona hasta un estado de equilibrio, donde se dispondrán
 en una estructura triangular.
 
 
-De hecho este comportamiento se verificar para otras configuraciones iniciales, 
-siempre que la temperatura del sistema sea lo suficientemente baja.
+De hecho este comportamiento se verifica para otras configuraciones iniciales, 
+siempre que la temperatura del sistema sea lo suficientemente baja. (Puede encontrarse
+las animaciones en el repositorio).
 
-Entonces para ver la transición de fase, se irá aumentado la temperatura del sistema, 
-es decir aumentado su velocidad en un factor $1.5$ en los tiempos 
-$t=20, 30, 35$ y $45$.
+Ahora para poder observar la transición de fase, se irá aumentando la temperatura 
+del sistema, es decir aumentado su velocidad en un factor $1.5$ en los tiempos 
+$t=20, 30, 35$ y $45$. 
 
 
-El proceso anterior esta bien para observar el fenómeno de la transición de fase,
-sin embargo, para estimar la temperatura crítica, se ha de calentar el sistema más lentamente
-y dejando que el sistema se relaje.
+\subsection{Temperatura crítica}
+
+El proceso anterior permite para observar el fenómeno de la transición de fase,
+sin embargo, para estimar la temperatura crítica, se ha de calentar el sistema más 
+lentamente y dejando que el sistema se relaje.
+
+
+
 
 
 \newpage

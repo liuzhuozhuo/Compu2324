@@ -173,6 +173,8 @@ siguientes unidades:
     \item $E$ en $[\text{kg m}^2/\text{s}^2]$, es decir en julios [J].
 \end{itemize}
 
+
+\newpage
 \section{Análisis de resultados}
 
 \subsection{Mapas de Poincaré}
@@ -183,44 +185,93 @@ Comenzando con la relación entre $\phi$ y $\psi$, para distintas
 energías (E = 1, 3, 5, 10, 15). Obteniendo la figura 
 \ref{fig:poincare_energias}.
 
+Se aprecia como los ángulos en este caso no superan a $\pi$, de modo
+con estas condiciones iniciales, el pendulo no da vueltas completas, 
+y esto se ve reflejado en el mapa de Poincaré. 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{plots/poincare_energias.png}
+    \includegraphics[width=0.9\textwidth]{plots/poincare_energias.png}
     \caption{Mapa de Poincaré para distintas energías}
     \label{fig:poincare_energias}
 \end{figure}
 
-Centrandonos en la energía $E = 1$ (figura \ref{fig:poincare_energia_1}) 
-se puede observar que el sistema tiende a ciertas configuraciones, 
+Centrandonos en el caso donde la energía $E = 1$ 
+(figura \ref{fig:poincare_energia_1}) se puede observar que el sistema 
+tiende a ciertas configuraciones, es decir que ciertas combinaciones de 
+ángulos $\phi$ y $\psi$ se repiten. Estas combinaciones de estados son 
+los atractores del sistema.
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{plots/poincare_energias_1.png}
+    \includegraphics[width=0.9\textwidth]{plots/poincare_energias_1.png}
     \caption{Mapa de Poincaré para E = 1}
     \label{fig:poincare_energia_1}
 \end{figure}
 
-Para energías mayores, se va deformando la forma inicial 
+Para energías mayores, se va deformando la forma inicial, alcanzando a 
+ángulos superiores, pero se sigue observando la misma tendencia a ciertas 
+combinaciones de ángulos, solapando ciertas combinaciones, para energías
+adjascentes.
 
-A grandes rasgos, se puede observar 
+Representado los ángulos con sus velocidades angulares, se obtienen otros 
+mapas de poincaré (figura \ref{fig:poincare_energias_phi_psi}). En este caso
+se observan trayectorias con forma de espiral, esto se debe a la relación entre
+dichas variables. También se sigue observando repeticiones en las combinaciones
+de ángulos, es decir los atractores del sistema.
 
+Intuitivamente se requiere una velocidad mayor para alcanzar ángulos mayores,
+es decir una energía cinética mayor, para alcanzar energías potenciales mayores. 
+No es posible tratar los 2 ángulos por separado, ya que el sistema está acoplado, 
+sin embargo plantar la conservación de la energía bajo estas condiciones 
+puede ser útil para comprender el por qué de las formas circulares en el mapa de
+poincaré. Por otro lado el cambio en la amplitud de las espirales, se debe al 
+intercambio de energía entre los dos grados de libertad.
 
-Representado los ángulos con sus velocidades angulares
-
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{plots/poincare_energias_phi_psi.png}
-    \caption{Relación entre $\phi$ y $\dot{\phi}$}
-    \label{fig:poincare_energias_phi}
+    \caption{Mapa de poincaré mostrando la relación entre $\phi$ y $\dot{\phi}$, 
+    así como $\psi$ y $\dot{\psi}$, para distintas energías.}
+    \label{fig:poincare_energias_phi_psi}
 \end{figure}
+
+Cabe notar que la figura para $\psi$ y $\dot{\psi}$ tiene dimensiones 
+aproximadamente el doble que la de $\phi$ y $\dot{\phi}$, esto se debe a
+la facilidad que tiene el sistema aumentar el ángulo en $\psi$, comparado 
+con $\phi$, ya que requiere el movimiento de una única masa, frente a las 2.
 
 \subsection{Coeficiente de Lyapunov}
 
 Para un sistema caótico, el coeficiente de Lyapunov nos permite
 cuantificar la tasa de divergencia de dos trayectorias infinitamente
-cercanas.
+cercanas. Como no es posible tener una separación inicial infinitamente
+cercana en la práctica, se tomará un número muy pequeño tal que los
+resultados no sean truncados por la máquina
+
+Considerando una separación inicial $\delta \psi_0 = 10^{-15}$, 
+al cabo de un tiempo $t$, la separación entre las dos trayectorias será 
+$\delta \psi (t)$, la relación entre ambas viene dado por:
+\begin{equation}
+    |\delta \psi (t)| \approx |\delta \psi_0| e^{\lambda t}, 
+\end{equation}
+con $\lambda$ el coeficiente de Lyapunov.
+
+Tomando la evolución de fracción de la separación a tiempo $t$ respecto 
+a la inicial, se obtiene la figura, donde se realiza un ajuste exponencial
+para obtener el coeficiente de Lyapunov.
+
+
+
 
 \subsection{Estabilidad del sistema}
+
+Para estudiar la estabilidad del sistema, se ha considerado pequeñas
+variaciones en las condiciones iniciales, a diferentes valores de 
+energía. Emplearemos nuevamente los mapas de poincaré. 
+
+Comenzando con las variaciones en la energía del sistema, para ángulos 
+iniciales bajos, para poder emplear los mismos ángulos iniciales para los 
+distintos casos, siendo estas $\phi_0 = \psi_0 = \pi/16$. 
 
 \subsection{Optimización}
 
@@ -230,10 +281,12 @@ de simulación.
 
 Se ha considerado 3 ordenadores distintos, con las siguientes características:
 \begin{itemize}
-    \item Portatil windows: Intel Core i5-12500H, 16GB RAM.
-    \item Portatil Macbook Pro M1 (2020), 8GB RAM.
+    \item Portatil windows: Intel Core i5-12500H, 16GB RAM, enchufado.
+    \item Portatil Macbook Pro M1 (2020), 8GB RAM, desenchufado.
     \item Joel.
 \end{itemize}
+
+
 
 
 \newpage
