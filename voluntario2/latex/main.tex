@@ -10,6 +10,7 @@
 \usepackage{booktabs}
 
 \usepackage{caption}
+\usepackage{subcaption}
 
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
@@ -260,6 +261,25 @@ Tomando la evolución de fracción de la separación a tiempo $t$ respecto
 a la inicial, se obtiene la figura, donde se realiza un ajuste exponencial
 para obtener el coeficiente de Lyapunov.
 
+\begin{figure}
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{plots/coeficientes_lyapunov_1_4.png}
+      \label{fig:coeficiente_lyapunov_1_4}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{plots/coeficientes_lyapunov_5.png}
+      \label{fig:coeficiente_lyapunov_5}
+    \end{subfigure}
+    \caption{plots of....}
+    \label{fig:coeficiente_lyapunov}
+\end{figure}
+
+En la figura \ref{fig:coeficiente_lyapunov} se observa como el coeficiente
+de Lyapunov aumenta con la energía del sistema, esto indica que el sistema
+es más caótico a medida que aumenta la energía.
+
 
 
 
@@ -267,17 +287,68 @@ para obtener el coeficiente de Lyapunov.
 
 Para estudiar la estabilidad del sistema, se ha considerado pequeñas
 variaciones en las condiciones iniciales, a diferentes valores de 
-energía. Emplearemos nuevamente los mapas de poincaré. 
+energía. Emplearemos nuevamente los mapas de poincaré, determinado que 
+un sistema es estable si las variaciones iniciales no afectan en gran medida
+la forma que tiene los mapas de poincaré.
 
 Comenzando con las variaciones en la energía del sistema, para ángulos 
 iniciales bajos, para poder emplear los mismos ángulos iniciales para los 
-distintos casos, siendo estas $\phi_0 = \psi_0 = \pi/16$. 
+distintos casos, siendo estas $\phi_0 = \psi_0 = \pi/16$, se irá viendo como 
+afecta la perturbación del ángulo $\psi_0$ a la evolución del sistema.
+
+\begin{figure}
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{plots/poincare_estabilidad_E_1.png}
+      \label{fig:poincare_estabilidad_E_1}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{plots/poincare_estabilidad_E_3.png}
+      \label{fig:poincare_estabilidad_E_3}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plots/poincare_estabilidad_E_5.png}
+        \label{fig:poincare_estabilidad_E_5}
+      \end{subfigure}%
+      \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plots/poincare_estabilidad_E_10.png}
+        \label{fig:poincare_estabilidad_E_10}
+      \end{subfigure}
+    \caption{plots of....}
+    \label{fig:poincare_estabilidad_E}
+\end{figure}
+    
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\linewidth]{plots/poincare_estabilidad_E_15.png}
+    \caption{plots of....}
+    \label{fig:poincare_estabilidad_E_15}
+\end{figure}
+
+En las figuras \ref{fig:poincare_estabilidad_E} y \ref{fig:poincare_estabilidad_E_15} 
+se observa como la perturbación en el ángulo $\psi_0$ afecta a la evolución 
+del sistema para distintos niveles de energía. En concreto se observa como 
+a niveles de energías bajos, los mapas de poincaré apenas varían entre las
+diferentes configuraciones iniciales, sin embargo a medida que aumenta la
+energia, la perturbación en el ángulo $\psi_0$ afecta en mayor medida a la
+evolución del sistema, separando las trayectorias en el mapa de poincaré. 
+Esto culmina en el caso de $E = 15$, donde hay un cambio drástico en un ángulo
+entre media de otros, lo que indica que el sistema es inestable para dichas 
+energías.
+
+
 
 \subsection{Optimización}
 
 Se va a comparar el tiempo de ejecución de los métodos de Runge-Kutta, para 
-distintas maquinas, distintos tamaños de paso $h$, y distintos tiempo total 
-de simulación.
+distintas máquinas, distintos tamaños de paso $h$, y distintos tiempos totales
+de simulación. Estos 2 últimos parámetros pueden ser unirse en uno solo, 
+el número de interacciones, $N = t/h$. Disminuyendo el tamaño de paso, o 
+aumentando el tiempo de simulación, tiene el mismo efecto en cuanto al coste
+computacional, ya que este es el parámetro empleado en el programa.
 
 Se ha considerado 3 ordenadores distintos, con las siguientes características:
 \begin{itemize}
@@ -286,7 +357,15 @@ Se ha considerado 3 ordenadores distintos, con las siguientes características:
     \item Joel.
 \end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{plots/optimizacion.png}
+    \caption{}
+    \label{fig:optimizacion}
+\end{figure}
 
+Se observa en la figura \ref{fig:optimizacion} como el tiempo de ejecución
+en relación con el número de interacciones tiene un comportamiento exponencial,
 
 
 \newpage
