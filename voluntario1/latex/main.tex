@@ -57,7 +57,9 @@
     En este informe tenemos como objetivo estudiar el comportamiento de un sistema que
     interactuan mediante un potencial de Lennar-Jones. Princialmente se estudiará 
     la distribución de velocidades de las partículas, la ecuación de estado y la 
-    transición de fase.
+    transición de fase. Además se estudiará como afecta el tamaño del sistema al tiempo
+    de ejecución del programa, para distintos parametros de optimización, y distintas
+    máquinas.
 
 \end{center}
 
@@ -209,7 +211,7 @@ Partiendo de las condiciones iniciales propuestas (20 átomos de Argón en una c
 de $L=10$, distribuida aleatoriamente, y velocidades de módulo 1 con dirección aleatoria), se ha simulado el
 experimento durante un tiempo $t = 50$, con un paso del tiempo 
 $\Delta t = 0.002$. La evolución del sistema puede visualizarse en formato gif, 
-en el propio repositorio ()
+en el propio repositorio.
 
 Representando la evolución de la energía cinética, potencial y total del sistema
 a lo largo del tiempo, se obtiene la figura \ref{fig:energias}.
@@ -420,12 +422,14 @@ del sistema, provocando un movimiento más caótico de las partículas.
 \subsection{Optimización}
 
 Se estudiará cómo afecta el tamaño del sistema al tiempo de ejecución del programa, 
-para distintos parametros de optimización, y distintas máquinas.
+para distintos parametros de optimización, y distintas máquinas. Se ha mantenido el 
+código igual para las 3 máquinas, solo variando una varíable en el código para
+indicar la máquina en la que se está ejecutando, y guardar en el archivo correspondiente.
 
 Los distintos ordenadores empleados son:
 \begin{itemize}
-    \item Portatil windows: Intel Core i5-12500H, 16GB RAM, enchufado.
-    \item Portatil Macbook Pro M1 (2020), 8GB RAM, desenchufado.
+    \item Portatil windows: Intel Core i5-12500H, 16GB RAM, enchufado a corriente.
+    \item Portatil Macbook Pro M1 (2020), 8GB RAM, desenchufado de la corriente.
     \item Joel.
 \end{itemize}
 Y los distintos parametros de optimización empleados son:
@@ -443,26 +447,109 @@ De esta manera se simplifica la programación para las condiciones iniciales, pr
 que las partículas estén en una red cuadrada, manteniendo una distancia inicial mínima 
 de $1$.
 
-Comenzando con el tiempo de ejecución sin optimizar, se obtiene la figura . Se observa 
+Comenzando con el tiempo de ejecución sin optimizar, se obtiene la figura 
+\ref{fig:sin_optimizar}. Se observa que se emplea un tiempo de ejecución muy elevado,
+incluso para sistemas pequeños, y que el tiempo de ejecución aumenta de manera 
+significativa con el tamaño del sistema.
 
+En el caso de Joel, no ha sido posible completar la simulación para $N=25$, ya que
+el tiempo de ejecución es muy elevado, y se ha interrumpido la simulación.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/no_optimizado.png}
+    \caption{Representación del tiempo de ejecución en función del tamaño del sistema, 
+    para distintos ordenadores, sin optimizar.}
+    \label{fig:sin_optimizar}
+\end{figure}
+
+Si se optimizan algunas funciones con \texttt{@jit(nopython=True)}, se obtiene la 
+figura \ref{fig:optimizado_parcial}. Se observa que el tiempo de ejecución disminuye
+de manera significativa, pero sigue siendo elevado. Además se observa que la relación 
+del tiempo de ejecución entre máquinas se mantienes.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plots/optimizado_parcial.png}
+    \caption{Representación del tiempo de ejecución en función del tamaño del sistema, 
+    para distintos ordenadores, optimizando algunas funciones con \texttt{@jit(nopython=True)}.}
+    \label{fig:optimizado_parcial}
+\end{figure}
+
+Optimizando todas las funciones con \texttt{@jit(nopython=True)}, se obtiene la figura
+\ref{fig:optimizado}. Se observa que el tiempo de ejecución disminuye de manera significativa
+y disminuye la diferencia entre los distintos ordenadores. Es en esta gráfica donde se
+observa que el tiempo de ejecución parece aumentar de manera cuadrática con el 
+tamaño del sistema.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{plots/optimizado.png}
+    \caption{Representación del tiempo de ejecución en función del tamaño del sistema, 
+    para distintos ordenadores, optimizando todas las funciones con \texttt{@jit(nopython=True)}.}
+    \label{fig:optimizado}
+\end{figure}
+
+Por último, si se paralelizan las funciones posibles con 
+\texttt{@jit(nopython=True, parallel=True)}, se obtiene los resultados recogidos 
+en la table \ref{tab:paralelizado}. \\
+
+\begin{table}[h!]
+    \centering
+    \caption{Tiempo de ejecución en segundos para distintos ordenadores, paralelizado con distintos hilos}
+    \begin{tabularx}{\textwidth}{ 
+    >{\centering\arraybackslash}X
+    >{\centering\arraybackslash}X
+    >{\centering\arraybackslash}X
+    >{\centering\arraybackslash}X
+ }
+    \toprule
+    Número de hilos &  Mac& windows & Joel\\ [0.5ex]
+    \midrule
+    2   &  856.526  & n/a & n/a \\[0.3ex]
+    8   &  828.001  & 2084.694 & n/a \\[0.3ex]
+    \bottomrule
+    \end{tabularx}
+    \label{tab:paralelizado}
+\end{table}
 
 Para la simulación con paralelización, se aprecia mucho peor resultado en todos los ordenadores,
 indepedientemente del número de núcleos empleados, incluso cuando se compara con el caso sin 
-optimizar. Esto indica que la paralelización no es adecuada para este tipo de simulaciones, esto 
+optimizar. Puede haber varios motivos para este resultado, el más obvio de estos sería
+el sobrecalentamiento de ambos portátiles, realentizando el proceso y provocando que no se pueda 
+solo se hagan los cálculos para $N=9$, y para el caso de Joel, no se ha podido complear los cálculos
+en un tiempo razonable. Es debido a esto que se cree que el sobrecalentamiento no 
+puede ser la única causa, además, independientemente del número de núcleos
+empleados, el tiempo de ejecución es muy elevado, y similares entre ellos para el caso del Mac.
+
+Esto puede indicar que la paralelización no es adecuada para este tipo de simulaciones, esto 
 puede ser debido a que no existe una gran cantidad de cálculos que se puedan paralelizar, y el 
 tiempo de comunicación entre los distintos núcleos o el tiempo empleado en la paralelización
 es mayor que el tiempo que se ahorra en los cálculos.
+
+\section{Conclusiones}
+
+En este informe se ha estudiado el comportamiento de un sistema de partículas que interactúan
+mediante un potencial de Lennard-Jones. Se ha estudiado la distribución de velocidades de las
+partículas, la ecuación de estado y la transición de fase, observando que la simulación 
+realizada se ajusta a lo esperado. 
+
+La parte más interesante de este informe ha sido la optimización del código, donde se ha
+observado que la paralelización no es adecuada para este tipo de simulaciones, y que la
+optimización de todas las funciones con \texttt{@jit(nopython=True)} es la mejor opción
+para reducir el tiempo de ejecución.
+
+
+
 \newpage
 
 \appendix
 
 \section{Tabla de valores}
 
-
-\newpage
-
-\section{Análisis de errores}
+Los valores obtenidos para las distintas simulaciones realizadas se encuentran en el
+repositorio, en diferentes carpetas indicando el apartado al que pertenecen, y en caso
+de ser importante, la máquina en la que se ha realizado la simulación.
 
 
 \end{document}
