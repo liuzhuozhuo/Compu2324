@@ -165,7 +165,20 @@ algoritmo de Verlet.
 
 Se ha empleado el sistema de unidades reducidas, donde la energía y la distancia se 
 expresan en función de una cantidad característica, en este caso $\epsilon$ y $\sigma$. 
+De modo que para las diferentes magnitudes se tiene:
+\begin{itemize}
+    \item Longitud: $r^* = \frac{r}{\sigma}$
+    \item Energía: $U^* = \frac{U}{\epsilon}$
+    \item Temperatura: $T^* = \frac{k_B T}{\epsilon}$
+    \item Tiempo: $t^* = t \sqrt{\frac{\epsilon}{m\sigma^2}}$
+    \item presion: $P^* = \frac{P\sigma^3}{\epsilon}$
+\end{itemize}
+donde se ha empleado el simbolo $*$ para indicar que la magnitud que está en unidades 
+reducidas, mientras que si no lo tiene se encuentra en unidades del sistema 
+internacional. 
 
+Salvo que se indique lo contrario, se supondrá que los valores mencionados en este
+informe se encuentran en unidades reducidas.
 
 \subsection{Cálculo de presión}
 
@@ -289,7 +302,8 @@ figura \ref{fig:ecuacion_estado}.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{plots/ajuste_presion.png}
-    \caption{}
+    \caption{Representación de la presión en función de la temperatura, para el sistema
+    indicado en este apartado, junto al ajuste lineal realizado entre ambas magnitudes.}
     \label{fig:ecuacion_estado}
 \end{figure}
 
@@ -315,14 +329,93 @@ las animaciones en el repositorio).
 
 Ahora para poder observar la transición de fase, se irá aumentando la temperatura 
 del sistema, es decir aumentado su velocidad en un factor $1.5$ en los tiempos 
-$t=20, 30, 35$ y $45$. 
+$t=20, 30, 35$ y $45$. El efecto de este aumento de temperatura se puede observar
+en la figura \ref{fig:transicion_fase}, donde se observa que la energía total del
+sistema aumenta. 
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/apartado_6_energia_0.png}
+    \caption{Representación de la evolución de las diferentes energías del sistema,
+    para un sistema de 16 partículas en una caja de $L=4$, con condiciones iniciales 
+    de una red cuadrada y en reposo, aumentando la temperatura en los tiempos 
+    $t=20, 30, 35$ y $45$.}
+    \label{fig:transicion_fase}
+\end{figure}
+
+Sin embargo en esta figura no se observa la transición de fase, para 
+ello se emplea el desplazamiento cuadrático medio, representado en la figura 
+\ref{fig:desplazamiento_cuadratico_medio_1}. Inicialmente la partícula permanece
+en una posición casi fija, pero al aumentar la temperatura, la partícula comienza a
+desplazarse más, eso culmina con el tercer aumento de temperatura, donde la partícula
+se desplaza de manera considerable, hasta llegar a variaciones abrutas de su posición.
+Esto indica la transición de fase del sistema.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/desplazamiento_1_particula.png}
+    \caption{Representación de la evolución desplazamiento cuadrático medio de la 
+    partícula 1 del sistema respecto de su posición inicial, para un sistema de 16 
+    partículas en una caja de $L=4$, con condiciones iniciales de una red cuadrada 
+    y en reposo, aumentando la temperatura en los tiempos $t=20, 30, 35$ y $45$.}
+    \label{fig:desplazamiento_cuadratico_medio_1}
+\end{figure}
+
+\newpage
 
 \subsection{Temperatura crítica}
 
 El proceso anterior permite para observar el fenómeno de la transición de fase,
 sin embargo, para estimar la temperatura crítica, se ha de calentar el sistema más 
-lentamente y dejando que el sistema se relaje.
+lentamente y dejando que el sistema se relaje. 
+
+Para ello se calentará el sistema más lentamente permitiendo que el sistema llegue al 
+equilibrio, antes de aumentadar la velocidad en un factor de $1.1$ en los tiempos 
+multiplos de $60$, es decir $t=60, 120, 180, ...$. Se ha simulado durante un tiempo 
+extensivo $t=600$, con un paso del tiempo $\Delta t = 0.002$, y estudiando el 
+desplazamiento cuadrático medio entre 2 partículas cualesquiera, en este
+caso se ha elegido la partícula 1 y 7, para obtener la figura 
+\ref{fig:energia_temp_crit} para la evolución de las energías del sistema, y la figura
+\ref{fig:desplazamiento_cuadratico_medio_1_7} para el desplazamiento cuadrático medio.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/energia_temp_crit.png}
+    \caption{Representación de la evolución de las energías del sistema, para un sistema
+    de 16 partículas en una caja de $L=4$, con condiciones iniciales de una red cuadrada 
+    y en reposo, aumentando la temperatura en los tiempos $t=60, 120, 180, ...$.}
+    \label{fig:energia_temp_crit}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{plots/desplazamiento_temp_crit.png}
+    \caption{Representación de la evolución desplazamiento cuadrático medio entre las 
+    partículas 1 y 7, para un sistema de 16 partículas en una caja de $L=4$, con condiciones iniciales de una red cuadrada 
+    y en reposo, aumentando la temperatura en los tiempos $t=60, 120, 180, ...$.}
+    \label{fig:desplazamiento_cuadratico_medio_1_7}
+\end{figure}
+
+En cuanto a la evolución de las energías, se observa lo esperado, con cada aumento de 
+temperatura, la energía cinética aumenta, causando un aumento tanto en la energía
+total como en la potencial.
+
+\newpage
+
+Mientas que para el desplazamiento cuadrático medio, se observa que inicialmente se 
+produce una caída en el desplazamiento cuadrático medio, indicando que el sistema ha
+alcanzado un estado sólido, la estructura triangular mencionada anteriormente. Con el 
+aumento de la temperatura, llega un punto donde disminuye el desplazamiento cuadrático
+medio entre dichas partículas, esto se debe a que el sistema ha alcanzado otro estado
+de equilibrio, con la misma forma triangular. Este proceso se repite hasta llegar a un
+punto donde el desplazamiento cuadrático medio aumenta de manera abrupta, indicando que
+se ha alcanzado la temperatura crítica, y el sistema comienza con la transición de fase.
+
+Tras la Transición de fase, el sistema se encuentra en un estado líquido, donde los 
+aumento en temperatura aumentan el desplazamiento cuadrático medio, y la energía cinética
+del sistema, provocando un movimiento más caótico de las partículas.
+
+\newpage
 
 \subsection{Optimización}
 
@@ -350,8 +443,16 @@ De esta manera se simplifica la programación para las condiciones iniciales, pr
 que las partículas estén en una red cuadrada, manteniendo una distancia inicial mínima 
 de $1$.
 
+Comenzando con el tiempo de ejecución sin optimizar, se obtiene la figura . Se observa 
 
 
+
+Para la simulación con paralelización, se aprecia mucho peor resultado en todos los ordenadores,
+indepedientemente del número de núcleos empleados, incluso cuando se compara con el caso sin 
+optimizar. Esto indica que la paralelización no es adecuada para este tipo de simulaciones, esto 
+puede ser debido a que no existe una gran cantidad de cálculos que se puedan paralelizar, y el 
+tiempo de comunicación entre los distintos núcleos o el tiempo empleado en la paralelización
+es mayor que el tiempo que se ahorra en los cálculos.
 \newpage
 
 \appendix
