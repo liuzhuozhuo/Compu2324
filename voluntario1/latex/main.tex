@@ -324,7 +324,31 @@ El proceso anterior permite para observar el fenómeno de la transición de fase
 sin embargo, para estimar la temperatura crítica, se ha de calentar el sistema más 
 lentamente y dejando que el sistema se relaje.
 
+\subsection{Optimización}
 
+Se estudiará cómo afecta el tamaño del sistema al tiempo de ejecución del programa, 
+para distintos parametros de optimización, y distintas máquinas.
+
+Los distintos ordenadores empleados son:
+\begin{itemize}
+    \item Portatil windows: Intel Core i5-12500H, 16GB RAM, enchufado.
+    \item Portatil Macbook Pro M1 (2020), 8GB RAM, desenchufado.
+    \item Joel.
+\end{itemize}
+Y los distintos parametros de optimización empleados son:
+\begin{itemize}
+    \item Sin optimización.
+    \item Optimizando algunas funciones empleadas con \texttt{@jit(nopython=True)}.
+    \item Optimizando todas las funciones empleadas con \texttt{@jit(nopython=True)}.
+    \item Paralelizando las funciones posibles con \texttt{@jit(nopython=True, parallel=True)}.
+    Y empleando distintos números de núcleos.
+\end{itemize}
+
+El aumento del tamaño del sistema, es decir el número de partículas se ha realizado
+de forma cuadrática ($N = 9, 16, 25, ...$), y la longitud de la caja sería $L = \sqrt{N}$.
+De esta manera se simplifica la programación para las condiciones iniciales, procurando
+que las partículas estén en una red cuadrada, manteniendo una distancia inicial mínima 
+de $1$.
 
 
 
