@@ -360,13 +360,18 @@ Se ha considerado 3 ordenadores distintos, con las siguientes características:
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\linewidth]{plots/optimizacion.png}
-    \caption{}
+    \caption{Representación del número de interacciones en relación con el tiempo 
+    de ejecución, para las distintas máquinas, en escala logarítimica. Optimizando
+    todas las funciones posibles con \texttt{@jit(nopython=True)}.}
     \label{fig:optimizacion}
 \end{figure}
 
-Se observa en la figura \ref{fig:optimizacion} como el tiempo de ejecución
-en relación con el número de interacciones tiene un comportamiento exponencial,
+Se observa en la figura \ref{fig:optimizacion}, como para Joel, falta el dato 
+para número de interacciones de $10^8$, ya que la máquina ha matado el proceso
+antes que de pudiera terminar, sin embargo por la forma que tiene la gráfica es 
+razonable esperar un comportamiento similar al ordenador de windows.
 
+En cuanto a la forma que tiene el tiempo de ejecución en relación con el número de interacciones esta tiene un comportamiento exponencial.
 
 \newpage
 
