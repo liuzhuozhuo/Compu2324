@@ -59,8 +59,8 @@
     doble pendulo, empleando el método de Runge-Kutta para simular el
     movimiento del sistema. Se estudiará la relación entre sus variables
     y la energía total del sistema, para distintas condiciones iniciales.
-    Además se analizará la estabilidad del sistema y la influencia pequeñas 
-    perturbaciones.
+    Además se analizará la estabilidad del sistema, la influencia pequeñas 
+    perturbaciones y la optimización del código.
 
 \end{center}
 
@@ -280,9 +280,6 @@ En la figura \ref{fig:coeficiente_lyapunov} se observa como el coeficiente
 de Lyapunov aumenta con la energía del sistema, esto indica que el sistema
 es más caótico a medida que aumenta la energía.
 
-
-
-
 \subsection{Estabilidad del sistema}
 
 Para estudiar la estabilidad del sistema, se ha considerado pequeñas
@@ -350,6 +347,11 @@ el número de interacciones, $N = t/h$. Disminuyendo el tamaño de paso, o
 aumentando el tiempo de simulación, tiene el mismo efecto en cuanto al coste
 computacional, ya que este es el parámetro empleado en el programa.
 
+En este caso se ha obviado paralelizar el código, ya que se espera resultados similares
+a los obtenidos en el voluntario 1: el potencial de Lennard-Jones, donde se observó 
+que el tiempo de ejecución aumentaba al paralelizar el código. Como el procedimiento de
+este voluntario es similar, no se empleará la paralelización.
+
 Se ha considerado 3 ordenadores distintos, con las siguientes características:
 \begin{itemize}
     \item Portatil windows: Intel Core i5-12500H, 16GB RAM, enchufado.
@@ -379,10 +381,8 @@ En cuanto a la forma que tiene el tiempo de ejecución en relación con el núme
 
 \section{Tabla de valores}
 
-
-\newpage
-
-\section{Análisis de errores}
-
+Los valores obtenidos en las simulaciones se encuentran en el propio repositorio
+donde se puede encontrar también el código empleado para la realización 
+de este informe y los gif generados para la visualización de los resultados.
 
 \end{document}
