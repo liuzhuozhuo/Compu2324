@@ -48,7 +48,7 @@ import numpy as np
 # Parámetros
 # ========================================
 file_in = "voluntario1/datos_apartado_4/posiciones_0_rand.txt" # Nombre del fichero de datos
-file_out = "voluntario1/videos/apartado_1" # Nombre del fichero de salida (sin extensión)
+file_out = "voluntario1/videos/apartado_4_random" # Nombre del fichero de salida (sin extensión)
 
 # Límites de los ejes X e Y
 L = 4
@@ -57,10 +57,10 @@ x_max = L
 y_min = -0
 y_max = L
 
-interval = 5 # Tiempo entre fotogramas en milisegundos
+interval = 3 # Tiempo entre fotogramas en milisegundos
 show_trail = False # Muestra la "estela" del planeta
 trail_width = 0.8 # Ancho de la estela
-save_to_file = False # False: muestra la animación por pantalla,
+save_to_file = True # False: muestra la animación por pantalla,
                      # True: la guarda en un fichero
 dpi = 80 # Calidad del vídeo de salida (dots per inch)
 
@@ -108,7 +108,7 @@ nplanets = len(frames_data[0])
 # Crea los objetos figure y axis
 fig = plt.figure(figsize=(7, 7))    
 ax = fig.add_subplot(111) 
-fig.suptitle('Animación de 20 átomos de argón con posiciones iniciales \n aleatorias, y velocidades de módulo 1 en dirección aleatoria.', fontsize=14)
+fig.suptitle('Animación de 16 átomos de argón con posiciones iniciales \n aleatorias, y velocidades iniciales nulas', fontsize=14)
 
 # Define el rango de los ejes
 ax.axis("equal")  # Misma escala para ejes X e Y
