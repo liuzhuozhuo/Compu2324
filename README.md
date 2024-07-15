@@ -1,5 +1,7 @@
+El propósito de este repositorio es para los códigos y resultados obtenidos para las entregas de la asignatura de Física Computacional,
+del curso 2023/24.
 
-## Obligatoria 1
+## Creditos
+El código original de animacion_planetas.py ha sido tomado de  https://github.com/jbermejovega/fisicacomputacional, se ha modificado ligeramente dicho código para ajustar a las necesidades de cada apartado.
 
-### Credits
-The original code for animacion_planetas.py is taken from the repository https://github.com/jbermejovega/fisicacomputacional
+Se ha empleado también Copilot para ciertas recomendaciones y autocomplear al programar, sobre todo en los voluntarios.
