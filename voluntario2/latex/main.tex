@@ -83,7 +83,17 @@
 
 \section{Introducción}
 
+El doble pendulo forma un sistema simple, pero produce un movimiento complejo,
+muy sensible a las condiciones iniciales. Este sistema es un ejemplo clásico
+de un sistema caótico. En este informe se estudiará el movimiento del doble
+pendulo, empleando el método de Runge-Kutta para simular el movimiento.
+
 \section{Planteamiento del problema}
+
+Para la simulación del movimiento del doble pendulo, hay diversos aspectos 
+a tomar en cuenta, como las ecuaciones del movimiento, las condiciones iniciales
+del sistema y las unidades empleadas.
+
 \subsection{Ecuaciones del movimiento}
 Primero debemos de hallar las expresiones de los momentos angulares
 a partir del Lagrangiano del sistema. 
@@ -191,7 +201,7 @@ con estas condiciones iniciales, el pendulo no da vueltas completas,
 y esto se ve reflejado en el mapa de Poincaré. 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{plots/poincare_energias.png}
+    \includegraphics[width=0.85\textwidth]{plots/poincare_energias.png}
     \caption{Mapa de Poincaré para distintas energías}
     \label{fig:poincare_energias}
 \end{figure}
@@ -204,7 +214,7 @@ los atractores del sistema.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{plots/poincare_energias_1.png}
+    \includegraphics[width=0.85\textwidth]{plots/poincare_energias_1.png}
     \caption{Mapa de Poincaré para E = 1}
     \label{fig:poincare_energia_1}
 \end{figure}
@@ -314,14 +324,18 @@ afecta la perturbación del ángulo $\psi_0$ a la evolución del sistema.
         \includegraphics[width=\linewidth]{plots/poincare_estabilidad_E_10.png}
         \label{fig:poincare_estabilidad_E_10}
       \end{subfigure}
-    \caption{plots of....}
+    \caption{Repesentación de los mapas de poincaré para distintas energías, con
+    ángulos iniciales $\phi_0 = \psi_0 = \pi/16$, variando el ángulo $\psi_0$ en
+    un valor de $0.001$}.
     \label{fig:poincare_estabilidad_E}
 \end{figure}
     
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.75\linewidth]{plots/poincare_estabilidad_E_15.png}
-    \caption{plots of....}
+    \caption{Repesentación de los mapas de poincaré para energía $E = 15$, con
+    ángulos iniciales $\phi_0 = \psi_0 = \pi/16$, variando el ángulo $\psi_0$ en
+    un valor de $0.001$}
     \label{fig:poincare_estabilidad_E_15}
 \end{figure}
 
@@ -347,8 +361,13 @@ el número de interacciones, $N = t/h$. Disminuyendo el tamaño de paso, o
 aumentando el tiempo de simulación, tiene el mismo efecto en cuanto al coste
 computacional, ya que este es el parámetro empleado en el programa.
 
-En este caso se ha obviado paralelizar el código, ya que se espera resultados similares
-a los obtenidos en el voluntario 1: el potencial de Lennard-Jones, donde se observó 
+A partir de los resultados obtenidos en el voluntario 1: el potencial de 
+Lennard-Jones, se empleará la optimización de todas las funciones empleadas 
+en el código, con \texttt{@jit(nopython=True)}. Ya que se espera resultados 
+similares entre ambos voluntarios, ya que el procedimiento es similar.
+
+En este caso se ha obviado también paralelizar el código, debido a los resultados 
+obtenidos en el voluntario 1: el potencial de Lennard-Jones, donde se observó 
 que el tiempo de ejecución aumentaba al paralelizar el código. Como el procedimiento de
 este voluntario es similar, no se empleará la paralelización.
 
@@ -373,7 +392,32 @@ para número de interacciones de $10^8$, ya que la máquina ha matado el proceso
 antes que de pudiera terminar, sin embargo por la forma que tiene la gráfica es 
 razonable esperar un comportamiento similar al ordenador de windows.
 
-En cuanto a la forma que tiene el tiempo de ejecución en relación con el número de interacciones esta tiene un comportamiento exponencial.
+En cuanto a la forma que tiene el tiempo de ejecución en relación con el número 
+de interacciones esta tiene un comportamiento exponencial.
+
+\section{Conclusiones}
+
+En este informe se ha estudiado el movimiento del doble pendulo, empleando el
+método de Runge-Kutta para simular el movimiento del sistema. Se ha estudiado
+la relación entre las variables del sistema, la energía total del sistema, la
+estabilidad del sistema y la optimización del código.
+
+Se ha observado como el sistema tiende a ciertas configuraciones, es decir
+ciertas combinaciones de ángulos, que se repiten en el mapa de poincaré,
+siendo estos los atractores del sistema. Se ha observado como el coeficiente
+de Lyapunov aumenta con la energía del sistema, indicando que el sistema es
+más caótico a medida que aumenta la energía.
+
+Se ha observado como la perturbación en los ángulos afecta en mayor
+medida a la evolución del sistema a medida que aumenta la energía, indicando
+que el sistema es inestable para ciertas energías, concordando con los resultados
+obtenidos en el coeficiente de Lyapunov.
+
+Por último se ha observado como el tiempo de ejecución del código aumenta
+exponencialmente con el número de interacciones, siendo este el parámetro
+más importante en el coste computacional del código. Mientras que para la 
+relación de tiempo entre ordenadores, se observa resultados similares 
+a los obtenidos en el voluntario 1: el potencial de Lennard-Jones.
 
 \newpage
 
